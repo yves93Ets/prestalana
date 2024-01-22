@@ -1,186 +1,184 @@
-"use client";
-import React, { useState } from "react";
+'use client'
+import React, { useState, useEffect } from 'react'
 import {
   DragDropContext,
-  Droppable,
   Draggable,
+  Droppable,
   DropResult,
-  DraggableLocation,
-} from "react-beautiful-dnd";
+  resetServerContext,
+} from 'react-beautiful-dnd'
+import { v4 as uuid } from 'uuid'
 
 interface Item {
-  id: string;
-  content: string;
+  id: string
+  content: string
 }
 
-// fake data generator
-const getItems = (count: number, offset = 0): Item[] =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k + offset}-${new Date().getTime()}`,
-    content: `item ${k + offset}`,
-  }));
+interface Column {
+  name: string
+  items: Item[]
+}
 
-const reorder = (
-  list: Item[],
-  startIndex: number,
-  endIndex: number
-): Item[] => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+interface Columns {
+  [key: string]: Column
+}
 
-  return result;
-};
+const itemsFromBackend: Item[] = [
+  { id: uuid(), content: 'First task' },
+  { id: uuid(), content: 'Second task' },
+  { id: uuid(), content: 'Third task' },
+  { id: uuid(), content: 'Fourth task' },
+  { id: uuid(), content: 'Fifth task' },
+]
 
-/**
- * Moves an item from one list to another list.
- */
-const move = (
-  source: Item[],
-  destination: Item[],
-  droppableSource: DraggableLocation,
-  droppableDestination: DraggableLocation
-): Record<string, Item[]> => {
-  const sourceClone = Array.from(source);
-  const destClone = Array.from(destination);
-  const [removed] = sourceClone.splice(droppableSource.index, 1);
+const columnsFromBackend: Columns = {
+  ['Requested']: {
+    name: 'Requested',
+    items: itemsFromBackend,
+  },
+  [uuid()]: {
+    name: 'To do',
+    items: [],
+  },
+  [uuid()]: {
+    name: 'In Progress',
+    items: [],
+  },
+  [uuid()]: {
+    name: 'Done',
+    items: [],
+  },
+}
 
-  destClone.splice(droppableDestination.index, 0, removed);
+const onDragEnd = (
+  result: DropResult,
+  columns: Columns,
+  setColumns: React.Dispatch<React.SetStateAction<Columns>>
+) => {
+  if (!result.destination) return
+  const { source, destination } = result
 
-  const result: Record<string, Item[]> = {};
-  result[droppableSource.droppableId] = sourceClone;
-  result[droppableDestination.droppableId] = destClone;
-
-  return result;
-};
-
-const grid = 8;
-
-const getItemStyle = (isDragging: boolean, draggableStyle: any) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-});
+  if (source.droppableId !== destination.droppableId) {
+    const sourceColumn = columns[source.droppableId]
+    const destColumn = columns[destination.droppableId]
+    const sourceItems = [...sourceColumn.items]
+    const destItems = [...destColumn.items]
+    const [removed] = sourceItems.splice(source.index, 1)
+    destItems.splice(destination.index, 0, removed)
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...sourceColumn,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destColumn,
+        items: destItems,
+      },
+    })
+  } else {
+    const column = columns[source.droppableId]
+    const copiedItems = [...column.items]
+    const [removed] = copiedItems.splice(source.index, 1)
+    copiedItems.splice(destination.index, 0, removed)
+    setColumns({
+      ...columns,
+      [source.droppableId]: {
+        ...column,
+        items: copiedItems,
+      },
+    })
+  }
+}
 
 export function Board() {
-  const [state, setState] = useState([getItems(10), getItems(5, 10)]);
+  const [columns, setColumns] = useState<Columns>(columnsFromBackend)
 
-  function onDragEnd(result: {
-    source: DraggableLocation;
-    destination: DraggableLocation;
-  }) {
-    const { source, destination } = result;
-
-    // dropped outside the list
-    if (!destination) {
-      return;
-    }
-    const sInd = +source.droppableId;
-    const dInd = +destination.droppableId;
-
-    if (sInd === dInd) {
-      const items = reorder(state[sInd], source.index, destination.index);
-      const newState = [...state];
-      newState[sInd] = items;
-      setState(newState);
-    } else {
-      const result = move(state[sInd], state[dInd], source, destination);
-      const newState = [...state];
-      newState[sInd] = result[sInd];
-      newState[dInd] = result[dInd];
-
-      setState(newState.filter((group) => group.length));
-    }
-  }
+  useEffect(() => {
+    setColumns(columnsFromBackend)
+  }, [])
 
   return (
-    <div>
+    <div style={{ display: 'flex', justifyContent: 'center', height: '100%' }}>
       <button
-        type="button"
         onClick={() => {
-          setState([...state, []]);
+          setColumns((col) => {
+            console.log(`col`, col.Requested)
+            col.Requested.items = [
+              ...col.Requested?.items,
+              { id: uuid(), content: 'new task' },
+            ]
+
+            return col
+          })
         }}
       >
-        Add new group
+        add
       </button>
-      <button
-        type="button"
-        onClick={() => {
-          setState([...state, getItems(1)]);
-        }}
+      <DragDropContext
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
-        Add new item
-      </button>
-      <div style={{ display: "flex" }}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {state.map((el, ind) => (
-            <Droppable key={ind} droppableId={`${ind}`}>
-              {(provided, snapshot) => (
-                <div
-                  ref={provided.innerRef}
-                  style={getListStyle(snapshot.isDraggingOver)}
-                  {...provided.droppableProps}
-                >
-                  {el.map((item, index) => (
-                    <Draggable
-                      key={item.id}
-                      draggableId={item.id}
-                      index={index}
-                    >
-                      {(provided, snapshot) => (
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          style={getItemStyle(
-                            snapshot.isDragging,
-                            provided.draggableProps.style
-                          )}
-                        >
+        {Object.entries(columns).map(([columnId, column], index) => (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+            key={columnId}
+          >
+            <h2>{column.name}</h2>
+            <div style={{ margin: 8 }}>
+              <Droppable droppableId={columnId} key={columnId}>
+                {(provided, snapshot) => (
+                  <div
+                    {...provided.droppableProps}
+                    ref={provided.innerRef}
+                    style={{
+                      background: snapshot.isDraggingOver
+                        ? 'lightblue'
+                        : 'lightgrey',
+                      padding: 4,
+                      width: 250,
+                      minHeight: 500,
+                    }}
+                  >
+                    {column.items.map((item, index) => (
+                      <Draggable
+                        key={item.id}
+                        draggableId={item.id}
+                        index={index}
+                      >
+                        {(provided, snapshot) => (
                           <div
+                            ref={provided.innerRef}
+                            {...provided.draggableProps}
+                            {...provided.dragHandleProps}
                             style={{
-                              display: "flex",
-                              justifyContent: "space-around",
+                              userSelect: 'none',
+                              padding: 16,
+                              margin: '0 0 8px 0',
+                              minHeight: '50px',
+                              backgroundColor: snapshot.isDragging
+                                ? '#263B4A'
+                                : '#456C86',
+                              color: 'white',
+                              ...provided.draggableProps.style,
                             }}
                           >
                             {item.content}
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const newState = [...state];
-                                newState[ind].splice(index, 1);
-                                setState(
-                                  newState.filter((group) => group.length)
-                                );
-                              }}
-                            >
-                              delete
-                            </button>
                           </div>
-                        </div>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </DragDropContext>
-      </div>
+                        )}
+                      </Draggable>
+                    ))}
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </div>
+          </div>
+        ))}
+      </DragDropContext>
     </div>
-  );
+  )
 }
