@@ -7,7 +7,7 @@ import useColumns from "@/hooks/useColumns";
 import { itemValidationSchema as validationSchema } from "@/utils/validation/schemas";
 import { ItemForm } from "@/interfaces/interface";
 
-import InlineInput from "./InlineInput";
+import InlineInput from "./common/InlineInput";
 
 const CreateItemForm = () => {
   const { getColumns, addNewItem } = useColumns();
@@ -61,7 +61,3 @@ const CreateItemForm = () => {
 };
 
 export default CreateItemForm;
-
-// 1111111 responsive
-// check for email
-// read me

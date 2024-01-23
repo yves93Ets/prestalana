@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 export interface ItemForm {
   task: string;
   stateOrder: string;
@@ -14,4 +15,8 @@ export interface Column {
 
 export interface Columns {
   [key: string]: Column;
+}
+
+export interface ProviderProps {
+  children: ReactNode;
 }

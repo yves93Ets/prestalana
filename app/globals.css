@@ -42,3 +42,15 @@ body {
 .container {
   @apply flex min-h-full flex-col justify-center px-6 py-12 lg:px-8;
 }
+
+.main {
+  @apply w-screen h-screen flex items-center justify-center;
+}
+
+.center {
+  @apply flex flex-col items-center justify-center;
+}
+
+.loginBtn {
+  @apply sm:mx-auto sm:w-full sm:max-w-sm;
+}
