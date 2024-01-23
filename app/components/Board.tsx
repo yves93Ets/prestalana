@@ -21,7 +21,7 @@ export function Board() {
   return (
     <Container className="!max-w-[1200px]">
       <div className="d-grid m-4 p-12">
-        <Button size="lg" className="!bg-customYellow !border-customYellow">
+        <Button size="lg" className="!bg-blue-700 !border-blue-700">
           <Link className="no-underline text-white" href="/item/create">
             Add Item
           </Link>

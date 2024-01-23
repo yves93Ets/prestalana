@@ -62,7 +62,6 @@ const CreateItemForm = () => {
 
 export default CreateItemForm;
 
-// check for email
-
 // 1111111 responsive
+// check for email
 // read me
