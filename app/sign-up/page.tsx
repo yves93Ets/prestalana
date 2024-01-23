@@ -1,6 +1,6 @@
 import Image from "next/image";
-
-import { emailValidation } from "../utils/validation/schemas";
+import { useFormik } from "formik";
+import { emailValidation } from "../../utils/validation/schemas";
 
 // rgb(246 189 13)
 export default function SignUp() {
@@ -14,11 +14,9 @@ export default function SignUp() {
     },
     validationSchema: emailValidation,
   });
-  const button =
-    "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600";
 
   return (
-    <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+    <div className="container">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <Image
           width={48}
@@ -35,9 +33,7 @@ export default function SignUp() {
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" action="#" method="POST">
           <div>
-            <label className="block text-sm font-medium leading-6 text-gray-900">
-              Email address
-            </label>
+            <label className="label">Email address</label>
             <div className="mt-2">
               <input
                 id="email"
@@ -50,17 +46,17 @@ export default function SignUp() {
           </div>
 
           <div>
-            <button type="submit" className={button}>
+            <button type="submit" className="button">
               Sign in
             </button>
           </div>
           <div>
-            <button type="submit" className={`${button} bg-black`}>
+            <button type="submit" className={`button bg-black`}>
               Sign up
             </button>
           </div>
           <div>
-            <button type="submit" className={`${button} bg-red-600`}>
+            <button type="submit" className={`button bg-red-600`}>
               Sign in with Google
             </button>
           </div>

@@ -2,6 +2,11 @@ import { Column, Item, Columns } from "@/interfaces/interface";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
+const uri = "http://localhost:3000/api";
+export const URI = {
+  items: `${uri}/items`,
+  columns: `${uri}/columns`,
+};
 export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
   const sortedArray = columns.sort((a, b) => a.order - b.order);
 
@@ -40,7 +45,7 @@ export const onDragEnd = (
     const sourceItems = [...sourceColumn.items];
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
-    destItems.splice(destination.index, 0, removed);
+
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -49,7 +54,7 @@ export const onDragEnd = (
       },
       [destination.droppableId]: {
         ...destColumn,
-        items: destItems,
+        items: [...destItems, removed],
       },
     });
   } else {

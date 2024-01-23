@@ -1,7 +1,9 @@
-export interface Item {
-  id: string;
+export interface ItemForm {
   task: string;
   stateOrder: string;
+}
+export interface Item extends ItemForm {
+  id: string;
 }
 
 export interface Column {

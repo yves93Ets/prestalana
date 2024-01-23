@@ -1,4 +1,4 @@
-import { normalizeColumns } from "@/app/utils/utils";
+import { URI, normalizeColumns } from "@/utils/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -8,8 +8,8 @@ import axios from "axios";
  */
 
 const thunk = async () => {
-  const columnsPromise = axios.get("http://localhost:3000/api/columns");
-  const itemsPromise = axios.get("http://localhost:3000/api/items");
+  const columnsPromise = axios.get(URI.columns);
+  const itemsPromise = axios.get(URI.items);
   try {
     const [itemsRes, colsRes] = await Promise.all([
       itemsPromise,
