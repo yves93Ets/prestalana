@@ -1,53 +1,58 @@
 "use client";
 import { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import Link from "next/link";
 
 import { Columns } from "@/interfaces/interface";
 import useColumns from "@/hooks/useColumns";
-import { onDragEnd } from "../utils/utils";
+
+import { onDragEnd } from "../../utils/utils";
 
 export function Board() {
   const [columns, setColumns] = useState<Columns>({} as Columns);
-  const [winReady, setwinReady] = useState(false);
   const { getColumns } = useColumns();
 
   useEffect(() => {
     setColumns(getColumns);
-    setwinReady(true);
   }, [getColumns]);
 
-  if (!winReady) return null;
+  if (Object.keys(columns).length === 0) return null;
   return (
-    <div style={{ display: "flex", justifyContent: "center", height: "100%" }}>
+    <Container className="!max-w-[1200px]">
+      <div className="d-grid m-4 p-12">
+        <Button size="lg" className="!bg-customYellow !border-customYellow">
+          <Link className="no-underline text-white" href="/item/create">
+            Add Item
+          </Link>
+        </Button>
+      </div>
       <DragDropContext
         onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
       >
-        {Object.entries(columns).map(([columnId, column], index) => (
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-            key={columnId}
-          >
-            <h2>{column.name}</h2>
-            <div style={{ margin: 8 }}>
+        <Row className="items-center m-2 justify-center">
+          {Object.entries(columns).map(([columnId, column]) => (
+            <Col
+              key={columnId}
+              xs={12}
+              md={12}
+              lg="auto"
+              xl="auto"
+              className="w-56 text-center rounded p-3 text-white"
+            >
+              <h3 className="w-56 bg-blue-700 text-center rounded p-2 text-white">
+                {column.name}
+              </h3>
               <Droppable droppableId={columnId} key={columnId}>
                 {(provided, snapshot) => (
                   <div
                     {...provided.droppableProps}
                     ref={provided.innerRef}
-                    style={{
-                      background: snapshot.isDraggingOver
-                        ? "lightblue"
-                        : "lightgrey",
-                      padding: 4,
-                      width: 250,
-                      minHeight: 500,
-                    }}
+                    className={`w-56 min-h-[500px] bg-blue-300 rounded p-2 ${
+                      snapshot.isDraggingOver ? "bg-blue-200" : "bg-gray-300"
+                    }`}
                   >
-                    {column.items.map((item) => (
+                    {column.items.map((item, index) => (
                       <Draggable
                         key={item.id}
                         draggableId={item.id}
@@ -58,17 +63,11 @@ export function Board() {
                             ref={provided.innerRef}
                             {...provided.draggableProps}
                             {...provided.dragHandleProps}
-                            style={{
-                              userSelect: "none",
-                              padding: 16,
-                              margin: "0 0 8px 0",
-                              minHeight: "50px",
-                              backgroundColor: snapshot.isDragging
-                                ? "#263B4A"
-                                : "#456C86",
-                              color: "white",
-                              ...provided.draggableProps.style,
-                            }}
+                            className={`select-none p-4 mb-2 min-h-[50px] text-white ${
+                              snapshot.isDragging
+                                ? "bg-blue-800"
+                                : "bg-blue-700"
+                            } ${provided.draggableProps.style}`}
                           >
                             {item.task}
                           </div>
@@ -79,10 +78,10 @@ export function Board() {
                   </div>
                 )}
               </Droppable>
-            </div>
-          </div>
-        ))}
+            </Col>
+          ))}
+        </Row>
       </DragDropContext>
-    </div>
+    </Container>
   );
 }

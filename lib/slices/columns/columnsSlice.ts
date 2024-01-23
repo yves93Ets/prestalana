@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Columns } from "@/interfaces/interface";
 
 import { buildColumns } from "./thunks/build-columns";
+import { createItem } from "./thunks/create-item";
 
 const initialState = {
   columns: {} as Columns,
@@ -20,15 +21,22 @@ const slice = createSlice({
         state.columns = cols;
       })
 
-      .addCase(buildColumns.rejected, (state, action) => {
-        console.log(1111, "action", action);
-      });
+      .addCase(buildColumns.rejected, (state, action) => {})
+
+      .addCase(createItem.fulfilled, (state, action) => {
+        const item = action.payload;
+        const items = state.columns[item.stateOrder].items;
+        state.columns[item.stateOrder].items = [...items, item];
+      })
+
+      .addCase(createItem.rejected, (state, action) => {});
   },
 });
 
 export const ColumnsActions = {
   ...slice.actions,
   buildColumns,
+  createItem,
 };
 
 export const ColumnsReducer = slice.reducer;
