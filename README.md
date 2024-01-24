@@ -96,6 +96,10 @@ folders
 
 Le di menos importancia al css mantuve una cierta logica donde cree clases para reutilzar y mantener un UI consistente.
 
+## Responsive
+
+- TODO
+
 ## Redux
 
 Utilso rtk y thunk para hacer llamadas del api a traves de un midleware
