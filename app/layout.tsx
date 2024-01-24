@@ -1,7 +1,9 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { StoreProvider, SessionProvider } from "./components/Provider";
+import {
+  StoreProviderWithSession,
+  SessionProvider,
+} from "./components/Provider";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +24,7 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${inter.className} bg`}>
         <SessionProvider>
-          <StoreProvider>{children}</StoreProvider>
+          <StoreProviderWithSession>{children}</StoreProviderWithSession>
         </SessionProvider>
       </body>
     </html>

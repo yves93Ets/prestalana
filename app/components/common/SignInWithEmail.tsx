@@ -7,35 +7,38 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { emailValidation as validationSchema } from "@/utils/validation/schemas";
+import { Spinner } from "react-bootstrap";
 
 export default function SignInWithEmail() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: "ygabriel@kuvasystems.com",
+      email: "aygm93@gmail.com",
     },
-    onSubmit: async () => {
-      console.log(2222);
-    },
+    onSubmit: async () => {},
     validationSchema,
   });
+
   const notify = (text: string, success = false) =>
     success ? toast.success(text) : toast.error(text);
 
-  const SignInWithEmail = async () => {
+  const handleSignInWithEmail = async () => {
+    formik.setSubmitting(true);
     if (!formik.isValid) return notify("Invalid email");
     if (formik.errors && formik.errors.email)
       return notify(formik.errors.email);
+
     const signInResult = await signIn("email", {
       email: formik.values.email,
       callbackUrl: `${window.location.origin}`,
       redirect: false,
     });
-    console.log(1111, "signInResult,formik", signInResult, formik);
+
     if (!signInResult?.ok)
       return notify(
         "Something went wrong, please try again" + signInResult?.error
       );
+    formik.setSubmitting(false);
 
     return notify("Check your email", true);
   };
@@ -78,8 +81,12 @@ export default function SignInWithEmail() {
           </div>
         </form>
         <div>
-          <button className="button" onClick={SignInWithEmail}>
-            Sign in with email
+          <button
+            className="button"
+            type="submit"
+            onClick={handleSignInWithEmail}
+          >
+            {formik.isSubmitting ? <Spinner /> : "Sign in with email"}
           </button>
         </div>
       </div>

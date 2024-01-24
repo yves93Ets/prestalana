@@ -10,7 +10,7 @@ export default async function Home() {
 
   return (
     <main className="main">
-      <div className="container">
+      <div className="center mt-10">
         {user ? (
           <>
             <p>Signed in as {user?.email}</p>

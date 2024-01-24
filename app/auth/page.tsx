@@ -7,10 +7,7 @@ import SignInWithEmail from "../components/common/SignInWithEmail";
 
 export default async function SignUp() {
   const user = await getUserSession(authOptions);
-  console.log(1111, "user", user);
-  if (user) {
-    return redirect("/");
-  }
+  if (user) return redirect("/");
 
   return (
     <div className="container space-y-6">
