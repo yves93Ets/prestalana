@@ -73,6 +73,11 @@ export default function SignInWithEmail() {
               <input
                 value={formik.values.email}
                 onChange={formik.handleChange}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    handleSignInWithEmail();
+                  }
+                }}
                 id="email"
                 name="email"
                 type="email"
@@ -84,7 +89,7 @@ export default function SignInWithEmail() {
         <div>
           <button
             className="button"
-            type="submit"
+            disabled={formik.isSubmitting}
             onClick={handleSignInWithEmail}
           >
             {formik.isSubmitting ? <Spinner /> : "Sign in with email"}
