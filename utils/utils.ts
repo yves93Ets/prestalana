@@ -2,7 +2,7 @@ import { Column, Item, Columns } from "@/interfaces/interface";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
-const uri = `${process.env.URI}/api`;
+const uri = `${process.env.URI || "https://prestalana.vercel.app"}/api`;
 export const URI = {
   items: `${uri}/items`,
   columns: `${uri}/columns`,

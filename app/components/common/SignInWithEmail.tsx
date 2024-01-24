@@ -23,22 +23,23 @@ export default function SignInWithEmail() {
     success ? toast.success(text) : toast.error(text);
 
   const handleSignInWithEmail = async () => {
-    formik.setSubmitting(true);
+    if (!formik.values.email) return notify("Email is required");
     if (!formik.isValid) return notify("Invalid email");
     if (formik.errors && formik.errors.email)
       return notify(formik.errors.email);
 
+    formik.setSubmitting(true);
     const signInResult = await signIn("email", {
       email: formik.values.email,
       callbackUrl: `${window.location.origin}`,
       redirect: false,
     });
+    formik.setSubmitting(false);
 
     if (!signInResult?.ok)
       return notify(
         "Something went wrong, please try again" + signInResult?.error
       );
-    formik.setSubmitting(false);
 
     return notify("Check your email", true);
   };
