@@ -2,7 +2,7 @@ import { Column, Item, Columns } from "@/interfaces/interface";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
-const uri = "http://localhost:3000/api";
+const uri = `${process.env.URI}/api`;
 export const URI = {
   items: `${uri}/items`,
   columns: `${uri}/columns`,
