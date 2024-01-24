@@ -1,14 +1,11 @@
 import { prisma } from "@/lib/prisma";
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest, NextResponse } from "next/server";
 
 type ResponseData = {
   columns: any;
 };
 
-export async function GET(
-  req: NextApiRequest,
-  res: NextApiResponse<ResponseData>
-) {
+export async function GET(req: NextRequest, res: NextResponse<ResponseData>) {
   const columns = await prisma.column.findMany();
   return Response.json({ columns });
 }
