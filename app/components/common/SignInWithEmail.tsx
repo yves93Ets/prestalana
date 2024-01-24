@@ -13,7 +13,7 @@ export default function SignInWithEmail() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      email: "aygm93@gmail.com",
+      email: "",
     },
     onSubmit: async () => {},
     validationSchema,
