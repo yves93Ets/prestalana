@@ -48,7 +48,11 @@ const CreateItemForm = () => {
 
           <InlineInput name="task" type="text" label="Task" />
 
-          <Button className="button" type="submit" disabled={isSubmitting}>
+          <Button
+            className="button !border-gray-300 !bg-gray-300"
+            type="submit"
+            disabled={isSubmitting}
+          >
             {isSubmitting ? <Spinner /> : "Submit"}
           </Button>
         </Form>

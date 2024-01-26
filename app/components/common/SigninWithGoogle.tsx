@@ -12,7 +12,7 @@ export default function SigninWithGoogle() {
             callbackUrl: `${window.location.origin}`,
           })
         }
-        className={`button !bg-red-600 text-center `}
+        className={`button !bg-red-600 text-center`}
       >
         Sign in with Google{" "}
         <Image
