@@ -2,11 +2,9 @@ import { Column, Item, Columns } from "@/interfaces/interface";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
-const uri = `${process.env.NEXT_URI || "prestalana.vercel.app"}/api`;
-
 export const URI = {
-  items: `${uri}/items`,
-  columns: `${uri}/columns`,
+  items: `api/items`,
+  columns: `api/columns`,
 };
 
 export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {

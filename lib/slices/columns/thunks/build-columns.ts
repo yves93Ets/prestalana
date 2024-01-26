@@ -10,6 +10,7 @@ import axios from "axios";
 const thunk = async () => {
   const columnsPromise = axios.get(URI.columns);
   const itemsPromise = axios.get(URI.items);
+
   try {
     const [itemsRes, colsRes] = await Promise.all([
       itemsPromise,
