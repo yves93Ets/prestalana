@@ -4,8 +4,6 @@ import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
 import { Row, Col, Button } from "react-bootstrap";
 import { CopyPlus } from "lucide-react";
 import Link from "next/link";
-import { Tooltip } from "react-tooltip";
-
 import { Columns } from "@/interfaces/interface";
 import useColumns from "@/hooks/useColumns";
 

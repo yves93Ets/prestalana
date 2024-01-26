@@ -15,7 +15,7 @@ export default async function SignUp() {
   if (user) return redirect("/");
 
   return (
-    <div className="container space-y-6">
+    <div className="container space-y-6 h-[95vh]">
       <SignInWithEmail />
       <SigninWithGoogle />
     </div>

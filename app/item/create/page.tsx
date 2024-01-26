@@ -9,12 +9,12 @@ export default function Item() {
   const router = useRouter();
   return (
     <main className="main">
-      <IconNavButton
+      <div className="mt-10">
+        <IconNavButton
           href="/"
           icon={ArrowLeftCircle}
           tooltipText="Go back to dashboard"
         />
-      <div className="mt-10">
         <CreateItemForm />
       </div>
     </main>

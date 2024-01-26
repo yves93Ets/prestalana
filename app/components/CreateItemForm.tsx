@@ -38,10 +38,10 @@ const CreateItemForm = () => {
       {({ values, isSubmitting, handleSubmit }) => (
         <Form
           onSubmit={handleSubmit}
-          className="sm:mx-auto sm:w-full sm:max-w-sm  rounded my-20 p-10 !bg-white "
+          className="sm:mx-auto sm:w-full sm:max-w-sm  rounded my-20 p-10 !bg-gray-400"
         >
           <h1 className="text-center p-4">Create Item</h1>
-          <label className="w-full text-center bg-blue-600 ">
+          <label className="w-full text-center bg-gray-300 ">
             {columns[values.stateOrder]?.name ?? "Invalid choice"}
           </label>
           <InlineInput name="stateOrder" type="number" label="State Order" />

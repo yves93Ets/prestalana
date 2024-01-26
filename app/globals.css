@@ -38,7 +38,7 @@ body {
 }
 
 .button {
-  @apply flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+  @apply flex w-full justify-center rounded !border-gray-300 !bg-gray-300 hover:bg-gray-600 !text-black px-3 py-1;
 }
 
 .container {
@@ -46,7 +46,11 @@ body {
 }
 
 .main {
-  @apply w-screen h-screen flex items-center justify-center;
+  @apply w-screen h-[95vh] flex items-center justify-center;
+}
+
+.header {
+  @apply h-[5vh];
 }
 
 .center {
