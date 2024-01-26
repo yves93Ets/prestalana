@@ -41,7 +41,7 @@ const CreateItemForm = () => {
           className="sm:mx-auto sm:w-full sm:max-w-sm  rounded my-20 p-10 !bg-white "
         >
           <h1 className="text-center p-4">Create Item</h1>
-          <label className="w-full text-center bg-blue-600 text-white">
+          <label className="w-full text-center bg-blue-600 ">
             {columns[values.stateOrder]?.name ?? "Invalid choice"}
           </label>
           <InlineInput name="stateOrder" type="number" label="State Order" />

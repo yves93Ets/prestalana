@@ -1,10 +1,12 @@
 import { Inter } from "next/font/google";
-import "./globals.css";
 import {
   StoreProviderWithSession,
   SessionProvider,
 } from "./components/Provider";
+import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import Header from "./Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +26,10 @@ export default function RootLayout({
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <body className={`${inter.className} bg`}>
         <SessionProvider>
-          <StoreProviderWithSession>{children}</StoreProviderWithSession>
+          <StoreProviderWithSession>
+            <Header />
+            {children}
+          </StoreProviderWithSession>
         </SessionProvider>
       </body>
     </html>

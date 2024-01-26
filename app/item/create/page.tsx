@@ -1,20 +1,20 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { ArrowLeftCircle } from "lucide-react";
+
 import CreateItemForm from "@/app/components/CreateItemForm";
-import { Button } from "react-bootstrap";
+import { IconNavButton } from "@/app/components/common/IconNavButton";
 
 export default function Item() {
   const router = useRouter();
   return (
     <main className="main">
-      <div className="center mt-10">
-        <Button className="button" onClick={() => router.push("/")}>
-          <div className="button gap-2">
-            <ArrowLeftCircle />
-            dashboard
-          </div>
-        </Button>
+      <IconNavButton
+          href="/"
+          icon={ArrowLeftCircle}
+          tooltipText="Go back to dashboard"
+        />
+      <div className="mt-10">
         <CreateItemForm />
       </div>
     </main>

@@ -5,20 +5,26 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-end-rgb: 0, 0, 0;
 }
 
 @media (prefers-color-scheme) {
   :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 255, 255, 255;
-    --background-end-rgb: 246, 189, 13;
+    --background-end-rgb: 0, 0, 0;
   }
 }
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-end-rgb));
+  background: linear-gradient(
+    180deg,
+    rgba(var(--background-end-rgb), 0.2) 20%,
+    rgba(var(--background-start-rgb), 0) 100%
+  );
+  color: black;
+  margin: 0;
 }
 
 @layer utilities {
@@ -27,16 +33,12 @@ body {
   }
 }
 
-.bg {
-  @apply bg-customYellow;
-}
-
 .label {
   @apply block text-sm font-medium leading-6 text-gray-900;
 }
 
 .button {
-  @apply flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
+  @apply flex w-full justify-center rounded-md bg-blue-600 px-3 py-1.5 text-sm font-semibold leading-6  shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600;
 }
 
 .container {
@@ -53,4 +55,12 @@ body {
 
 .loginBtn {
   @apply sm:mx-auto sm:w-full sm:max-w-sm;
+}
+
+.onHover {
+  @apply hover:bg-gray-100 hover:cursor-pointer;
+}
+
+.btn-rounded {
+  @apply p-2 bg-gray-400 rounded-full;
 }

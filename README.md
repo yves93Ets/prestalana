@@ -108,6 +108,14 @@ No implemente nada para los error ol estado de espera (loading) pero se puede ha
 
 Como la demanda era abierta y sin muchos detallas puede ser complicado saber que quieren exactamente. Trate de hacer un poco de todo sin necesariamente hacerlo al 100 ya que no tenia mucho tiempo y tampoco queria invertir tanto tiempo en este proyecto.
 
+## Auth
+
+- las rutas y api estan bloqueadas si no esta uno conectado
+
+## directorio app
+
+Use el directorio app probar, personalmente prefiero con src
+
 # Usar localmente
 
 - npm i para instalar las dependecias

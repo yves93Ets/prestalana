@@ -1,31 +1,15 @@
 import { Board } from "./components/Board";
-import Link from "next/link";
 
-import { authOptions } from "@/lib/auth";
-import { getUserSession } from "@/lib/session";
-import LogOut from "./components/common/LogOut";
+export const metadata = {
+  title: "Prestalana-Board",
+  description: "Trello like board with dnd",
+};
 
 export default async function Home() {
-  const user = await getUserSession(authOptions);
-
   return (
-    <main className="main">
-      <div className="center mt-10">
-        {user ? (
-          <>
-            <p>Signed in as {user?.email}</p>
-            <LogOut />
-            <Board />
-          </>
-        ) : (
-          <div className="center">
-            <button className="button w-auto">
-              <Link className="text-white no-underline " href="/auth">
-                Go to login
-              </Link>
-            </button>
-          </div>
-        )}
+    <main className="main bg-grey-300">
+      <div className=" bg-grey-200 w-full p-4">
+        <Board />
       </div>
     </main>
   );

@@ -2,11 +2,13 @@ import { Column, Item, Columns } from "@/interfaces/interface";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
-const uri = `${process.env.URI || "https://prestalana.vercel.app"}/api`;
+const uri = `${process.env.URI || "http://localhost:3000"}/api`;
+
 export const URI = {
   items: `${uri}/items`,
   columns: `${uri}/columns`,
 };
+
 export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
   const sortedArray = columns.sort((a, b) => a.order - b.order);
 
