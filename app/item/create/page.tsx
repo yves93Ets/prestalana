@@ -9,7 +9,7 @@ export default function Item() {
   const router = useRouter();
   return (
     <main className="main">
-      <div className="mt-10">
+      <div className="mt-10 min-w-[650px]">
         <IconNavButton
           href="/"
           icon={ArrowLeftCircle}

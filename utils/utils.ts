@@ -39,13 +39,15 @@ export const onDragEnd = (
 ) => {
   if (!result.destination) return;
   const { source, destination } = result;
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId];
-    const destColumn = columns[destination.droppableId];
-    const sourceItems = [...sourceColumn.items];
-    const destItems = [...destColumn.items];
-    const [removed] = sourceItems.splice(source.index, 1);
 
+  const sourceColumn = columns[source.droppableId];
+  const destColumn = columns[destination.droppableId];
+  const sourceItems = [...sourceColumn.items];
+  const destItems = [...destColumn.items];
+  const [moved] = sourceItems.splice(source.index, 1);
+  const destIndex = destination.index;
+
+  if (source.droppableId !== destination.droppableId) {
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -54,19 +56,24 @@ export const onDragEnd = (
       },
       [destination.droppableId]: {
         ...destColumn,
-        items: [...destItems, removed],
+        items: [
+          ...destItems.slice(0, destIndex),
+          moved,
+          ...destItems.slice(destIndex),
+        ],
       },
     });
   } else {
-    const column = columns[source.droppableId];
-    const copiedItems = [...column.items];
-    const [removed] = copiedItems.splice(source.index, 1);
-    copiedItems.splice(destination.index, 0, removed);
+    sourceItems.splice(destination.index, 0, moved);
+
     setColumns({
       ...columns,
       [source.droppableId]: {
-        ...column,
-        items: copiedItems,
+        ...sourceColumn,
+        items: [
+          ...sourceItems.slice(0, destIndex),
+          ...sourceItems.slice(destIndex),
+        ],
       },
     });
   }

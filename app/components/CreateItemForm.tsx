@@ -38,23 +38,26 @@ const CreateItemForm = () => {
       {({ values, isSubmitting, handleSubmit }) => (
         <Form
           onSubmit={handleSubmit}
-          className="sm:mx-auto sm:w-full sm:max-w-sm  rounded my-20 p-10 !bg-gray-400"
+          className="m-4 rounded-lg  !bg-gray-400 center"
         >
-          <h1 className="text-center p-4">Create Item</h1>
-          <label className="w-full text-center bg-gray-300 ">
-            {columns[values.stateOrder]?.name ?? "Invalid choice"}
-          </label>
-          <InlineInput name="stateOrder" type="number" label="State Order" />
+          <h1 className="w-full text-center p-4 bg-black rounded-t-lg text-white">
+            Create Item
+          </h1>
+          <div className="w-full my-0 p-10 rounded-b-lg">
+            <label className="w-full text-center bg-black text-white">
+              {columns[values.stateOrder]?.name ?? "Invalid choice"}
+            </label>
+            <InlineInput name="stateOrder" type="number" label="State Order" />
+            <InlineInput name="task" type="text" label="Task" />
 
-          <InlineInput name="task" type="text" label="Task" />
-
-          <Button
-            className="button !border-gray-300 !bg-gray-300"
-            type="submit"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? <Spinner /> : "Submit"}
-          </Button>
+            <Button
+              className="!border-black !bg-black px-3 py-1 "
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <Spinner /> : "Submit"}
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

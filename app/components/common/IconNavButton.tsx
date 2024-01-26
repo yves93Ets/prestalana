@@ -21,7 +21,7 @@ export function IconNavButton({
           size={40}
           data-tooltip-id="my-tooltip"
           data-tooltip-content={tooltipText}
-          className="btn-rounded onHove"
+          className="btn-rounded onHover"
         />
       </Link>
     </>

@@ -8,6 +8,7 @@ export interface Item extends ItemForm {
 }
 
 export interface Column {
+  id: string;
   name: string;
   items: Item[];
   order: number;

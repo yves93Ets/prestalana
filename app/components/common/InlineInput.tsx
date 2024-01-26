@@ -14,7 +14,11 @@ const InlineInput = ({ name, type = "text", label }: InlineInputProps) => {
         <label htmlFor={name} className="label">
           {label}
         </label>
-        <Field name={name} type={type} className="border rounded p-2" />
+        <Field
+          name={name}
+          type={type}
+          className="border rounded-lg p-2 w-5/6"
+        />
       </div>
       <ErrorMessage name={name} component="div" className="text-red-800" />
     </>
