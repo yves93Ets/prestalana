@@ -1,6 +1,6 @@
 "use client";
 
-import { ProviderProps } from "@/interfaces/interface";
+import { ProviderProps } from "@/interfaces/Columns";
 import { SessionProvider } from "next-auth/react";
 
 const Provider = ({ children }: ProviderProps) => {

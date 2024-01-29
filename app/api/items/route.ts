@@ -16,19 +16,13 @@ export async function POST(req: Request) {
   return Response.json({ item });
 }
 
-/**
- * @param {string} id - The id of the item to delete.
- */
-
 export async function DELETE(req: Request) {
   const data = await req.json();
-  console.log(1111, "22222", 22222);
   try {
-    const item = await prisma.item.delete({ where: { id: data.id } });
-
-    console.log(1111, "item", item);
-    return Response.json(true);
+    await prisma.item.delete({ where: { id: data.itemId } });
+    return Response.json({ status: 200 });
   } catch (error) {
+    console.error(1111, "error", error);
     return Response.json({ error, status: 500 });
   }
 }

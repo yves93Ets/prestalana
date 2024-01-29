@@ -6,8 +6,16 @@ interface InlineInputProps {
   name: string;
   type: "text" | "number";
   label: string;
+  min?: number;
+  max?: number;
 }
-const InlineInput = ({ name, type = "text", label }: InlineInputProps) => {
+const InlineInput = ({
+  name,
+  type = "text",
+  label,
+  min,
+  max,
+}: InlineInputProps) => {
   return (
     <>
       <div className="container px-0 flex-row items-center !justify-between">
@@ -15,6 +23,8 @@ const InlineInput = ({ name, type = "text", label }: InlineInputProps) => {
           {label}
         </label>
         <Field
+          min={min}
+          max={max}
           name={name}
           type={type}
           className="border rounded-lg p-2 w-5/6"

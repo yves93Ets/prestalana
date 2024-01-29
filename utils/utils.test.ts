@@ -1,6 +1,7 @@
 import { items, columns, dropResult, dropResultSame } from "./mockData";
 import { normalizeColumns, onDragEnd } from "./utils";
-import { Column, Item } from "@/interfaces/interface";
+import { Column } from "@/interfaces/Columns";
+import { Item } from "@/interfaces/Items";
 
 describe("normalizeColumns", () => {
   it("should normalize columns correctly", () => {

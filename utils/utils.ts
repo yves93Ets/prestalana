@@ -1,10 +1,13 @@
-import { Column, Item, Columns } from "@/interfaces/interface";
+import { Column, Columns } from "@/interfaces/Columns";
+import { Item } from "@/interfaces/Items";
 import { DropResult } from "@hello-pangea/dnd";
 import { SetStateAction, Dispatch } from "react";
 
+const url = process.env.NEXT_PUBLIC_URL;
+
 export const URI = {
-  items: `api/items`,
-  columns: `api/columns`,
+  items: `${url}/api/items`,
+  columns: `${url}/api/columns`,
 };
 
 export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
