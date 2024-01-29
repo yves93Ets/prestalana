@@ -1,7 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { getUserSession } from "@/lib/session";
 import { StoreProvider } from ".";
-import { ProviderProps } from "@/interfaces/interface";
+import { ProviderProps } from "@/interfaces/Columns";
 
 export default async function StoreProviderWithSession({
   children,

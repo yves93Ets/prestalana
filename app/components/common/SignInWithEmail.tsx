@@ -43,6 +43,7 @@ export default function SignInWithEmail() {
 
     return notify("Check your email", true);
   };
+  const disabled = formik.isSubmitting || formik.values.email === "";
 
   return (
     <>
@@ -81,15 +82,15 @@ export default function SignInWithEmail() {
                 id="email"
                 name="email"
                 type="email"
-                className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm placeholder:text-gray-400  sm:text-sm sm:leading-6"
               />
             </div>
           </div>
         </form>
         <div>
           <button
-            className="button"
-            disabled={formik.isSubmitting}
+            className={disabled ? "button-disabled" : "button"}
+            disabled={disabled}
             onClick={handleSignInWithEmail}
           >
             {formik.isSubmitting ? <Spinner /> : "Sign in with email"}

@@ -6,7 +6,7 @@ import { Button, Form } from "react-bootstrap";
 
 import useColumns from "@/hooks/useColumns";
 import { itemValidationSchema as validationSchema } from "@/utils/validation/schemas";
-import { ItemForm } from "@/interfaces/interface";
+import { ItemForm } from "@/interfaces/Items";
 
 import InlineInput from "./common/InlineInput";
 import Spinner from "./common/Spinner";
@@ -19,6 +19,8 @@ const CreateItemForm = () => {
     stateOrder: 1,
     task: "",
   };
+
+  //simply to show the spinner on load
   const delay = (ms = 1000) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -47,7 +49,13 @@ const CreateItemForm = () => {
             <label className="w-full text-center bg-black text-white">
               {columns[values.stateOrder]?.name ?? "Invalid choice"}
             </label>
-            <InlineInput name="stateOrder" type="number" label="State Order" />
+            <InlineInput
+              min={1}
+              max={max}
+              name="stateOrder"
+              type="number"
+              label="State Order"
+            />
             <InlineInput name="task" type="text" label="Task" />
 
             <Button
