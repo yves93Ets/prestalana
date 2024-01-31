@@ -19,11 +19,22 @@ export async function POST(req: Request) {
   return Response.json({ item });
 }
 
+
+/**
+ * @param {string} id - Id of task to update
+ * @param {string} stateOrder - The order of the state. min to 1 max depends on the number of columns
+ */
+
 export async function PUT(req: Request) {
   const data = await req.json();
-  const item = await prisma.item.update({ where: { id: data.id }, data });
+  await prisma.item.update({
+    where: { id: data.id },
+    data: {
+      stateOrder: data.stateOrder,
+    },
+  });
 
-  return Response.json({ item });
+  return Response.json(true);
 }
 
 export async function DELETE(req: Request) {
