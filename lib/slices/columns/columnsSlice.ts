@@ -57,4 +57,4 @@ export const ColumnsActions = {
 
 export const ColumnsReducer = slice.reducer;
 
-//....11111 responsive handle errors
+//....11111 handle errors

@@ -20,9 +20,13 @@ export function DroppableColumn({
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`max-w-56 min-h-[500px] bg-gray-300 rounded-lg p-2 ${
-              snapshot.isDraggingOver ? "bg-gray-500" : "bg-gray-400"
-            }`}
+            className={`sm:w-full  md:w-ful lg:w-56 xl:w-56 
+            min-h-[150px]
+            lg:min-h-[500px]
+            xl:min-h-[500px]
+            rounded-lg p-2
+            //  ${snapshot.isDraggingOver ? "bg-gray-500" : "bg-gray-400"}
+             `}
           >
             {column.items.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
@@ -33,7 +37,9 @@ export function DroppableColumn({
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     className={`
-                              select-none p-4 mb-2 min-h-[50px] text-center  ${
+                              select-none py-2 mb-2 
+                              min-h-[30px]
+                              text-center  ${
                                 snapshot.isDragging
                                   ? "bg-gray-100"
                                   : "bg-gray-200"

@@ -54,8 +54,8 @@ export function Board() {
   if (Object.keys(columns).length === 0) return null;
 
   return (
-    <div className="w-full">
-      <div className="px-16 w-content">
+    <div className="w-full bg-gray-100 rounded xl:p-4 p-4">
+      <div className="w-content py-2">
         <IconNavButton
           href="/item/create"
           icon={CopyPlus}
@@ -75,9 +75,9 @@ export function Board() {
               md={12}
               lg="auto"
               xl="auto"
-              className="w-56 rounded-lg p-3 "
+              className="w-56 sm:w-full  md:w-full rounded-lg"
             >
-              <h3 className="w-56  rounded-lg p-2 ">{column.name}</h3>
+              <h3 className="rounded-lg p-2 my-2">{column.name}</h3>
               {selected.columnId === columnId && (
                 <span className="absolute">
                   <Trash
