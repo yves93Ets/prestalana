@@ -39,4 +39,4 @@ export async function DELETE(req: Request) {
   }
 }
 
-export const getItems = cache(() => prisma.item.findMany());
+const getItems = cache(() => prisma.item.findMany());
