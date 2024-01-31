@@ -1,14 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
-import { DragDropContext, Draggable, Droppable } from "@hello-pangea/dnd";
+import {
+  DragDropContext,
+  Draggable,
+  DropResult,
+  Droppable,
+} from "@hello-pangea/dnd";
 import { Row, Col } from "react-bootstrap";
 import { CopyPlus, Trash } from "lucide-react";
-import { Columns,  } from "@/interfaces/Columns";
-import { ItemDelete } from "@/interfaces/Items";
+import { Columns } from "@/interfaces/Columns";
+import { ItemDelete, ItemUpdate } from "@/interfaces/Items";
 import useColumns from "@/hooks/useColumns";
 
 import { onDragEnd } from "@/utils/utils";
 import { IconNavButton } from "@/app/components/common/IconNavButton";
+import { DroppableColumn } from "./DroppableColumn";
 
 export function Board() {
   const [columns, setColumns] = useState<Columns>({} as Columns);
@@ -16,7 +22,7 @@ export function Board() {
     columnId: "",
     itemId: "",
   });
-  const { getColumns, deleteItem } = useColumns();
+  const { getColumns, deleteItem, updateStateOrder } = useColumns();
 
   useEffect(() => {
     setColumns(getColumns);
@@ -35,11 +41,21 @@ export function Board() {
     setSelected({ columnId: "", itemId: "" });
   };
 
+  const handleDragEnd = async (result: DropResult) => {
+    onDragEnd(result, columns, setColumns);
+    const body = {
+      id: result.draggableId,
+      stateOrder: result.destination?.droppableId,
+    } as ItemUpdate;
+
+    await updateStateOrder(body);
+  };
+
   if (Object.keys(columns).length === 0) return null;
 
   return (
-    <div className="w-full">
-      <div className="px-16">
+    <div className="w-full bg-gray-100 rounded xl:p-4 p-4">
+      <div className="w-content py-2">
         <IconNavButton
           href="/item/create"
           icon={CopyPlus}
@@ -48,7 +64,8 @@ export function Board() {
       </div>
 
       <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        onDragStart={() => setSelected({ columnId: "", itemId: "" })}
+        onDragEnd={handleDragEnd}
       >
         <Row className="justify-evenly">
           {Object.entries(columns).map(([columnId, column]) => (
@@ -58,57 +75,24 @@ export function Board() {
               md={12}
               lg="auto"
               xl="auto"
-              className="w-56 rounded-lg p-3 "
+              className="w-56 sm:w-full  md:w-full rounded-lg"
             >
-              <h3 className="w-56  rounded-lg p-2 ">{column.name}</h3>
+              <h3 className="rounded-lg p-2 my-2">{column.name}</h3>
               {selected.columnId === columnId && (
-                <div>
+                <span className="absolute">
                   <Trash
                     onClick={handleDelete}
                     size={40}
-                    className="btn-rounded onHover !bg-gray-500 float-right relative bottom-[60px]"
+                    className="btn-rounded onHover !bg-gray-500 relative bottom-[60px] left-[180px]"
                   />
-                </div>
+                </span>
               )}
-
-              <Droppable droppableId={columnId} key={columnId}>
-                {(provided, snapshot) => (
-                  <>
-                    <div
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      className={`w-56 min-h-[500px] bg-gray-300 rounded-lg p-2 ${
-                        snapshot.isDraggingOver ? "bg-gray-500" : "bg-gray-400"
-                      }`}
-                    >
-                      {column.items.map((item, index) => (
-                        <Draggable
-                          key={item.id}
-                          draggableId={item.id}
-                          index={index}
-                        >
-                          {(provided, snapshot) => (
-                            <div
-                              onClick={() => handleSelect(columnId, item.id)}
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={`select-none p-4 mb-2 min-h-[50px] text-center  ${
-                                snapshot.isDragging
-                                  ? "bg-gray-100"
-                                  : "bg-gray-200"
-                              } ${provided.draggableProps.style}`}
-                            >
-                              {item.task}
-                            </div>
-                          )}
-                        </Draggable>
-                      ))}
-                      {provided.placeholder}
-                    </div>
-                  </>
-                )}
-              </Droppable>
+              <DroppableColumn
+                columnId={columnId}
+                column={column}
+                itemId={selected.itemId}
+                handleSelect={handleSelect}
+              />
             </Col>
           ))}
         </Row>
