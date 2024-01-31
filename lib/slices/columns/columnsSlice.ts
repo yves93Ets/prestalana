@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 import { Columns } from "@/interfaces/Columns";
-/////////////.  responsive  BOARD ******** update on change  
 import { buildColumns } from "./thunks/build-columns";
+
 import { createItem } from "./thunks/create-item";
 import { deleteItem } from "./thunks/delete-item";
+import { updateItem } from "./thunks/update-item";
 
 const initialState = {
   columns: {} as Columns,
@@ -39,7 +40,10 @@ const slice = createSlice({
 
         state.columns[columnId].items = newItems;
       })
-      .addCase(deleteItem.rejected, (state, action) => {});
+      .addCase(deleteItem.rejected, (state, action) => {})
+
+      .addCase(updateItem.fulfilled, (state, action) => {})
+      .addCase(updateItem.rejected, (state, action) => {});
   },
 });
 
@@ -48,6 +52,9 @@ export const ColumnsActions = {
   buildColumns,
   createItem,
   deleteItem,
+  updateItem,
 };
 
 export const ColumnsReducer = slice.reducer;
+
+//....11111 responsive handle errors

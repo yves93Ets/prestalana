@@ -2,7 +2,7 @@ import { shallowEqual } from "react-redux";
 
 import { ColumnsActions } from "@/lib/slices/columns/columnsSlice";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
-import { ItemDelete, ItemForm } from "@/interfaces/Items";
+import { ItemDelete, ItemForm, ItemUpdate } from "@/interfaces/Items";
 
 const useColumns = () => {
   const dispatch = useAppDispatch();
@@ -11,9 +11,12 @@ const useColumns = () => {
     dispatch(ColumnsActions.deleteItem(body));
   };
   const setColumnsInStore = () => dispatch(ColumnsActions.buildColumns());
-  const addNewItem = (body: ItemForm) => {
+
+  const addNewItem = (body: ItemForm) =>
     dispatch(ColumnsActions.createItem(body));
-  };
+
+  const updateStateOrder = (body: ItemUpdate) =>
+    dispatch(ColumnsActions.updateItem(body));
 
   const getColumns = useAppSelector(
     ({ columnsState }) => columnsState.columns,
@@ -25,6 +28,7 @@ const useColumns = () => {
     getColumns,
     addNewItem,
     deleteItem,
+    updateStateOrder,
   };
 };
 

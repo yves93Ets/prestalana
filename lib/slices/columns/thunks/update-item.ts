@@ -1,17 +1,17 @@
-import { ItemDelete } from "@/interfaces/Items";
+import { ItemUpdate } from "@/interfaces/Items";
 import { URI } from "@/utils/utils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 /**
  * Create a new item the item can have a task and a stateOrder
- * @param {string} task - The task to be performed.
+ * @param {string} id - The id of the task to update
  * @param {string} stateOrder - The order of the state. min to 1 max depends on the number of columns
  */
 
-const thunk = async (body: ItemDelete) => {
+const thunk = async (body: ItemUpdate) => {
   try {
-    const res = await axios.delete(`${URI.items}`, { data: body });
+    const res = await axios.put(`${URI.items}`, body );
     if (res.status === 200) return { ...body };
 
     throw Error("Error adding item");
@@ -20,4 +20,4 @@ const thunk = async (body: ItemDelete) => {
   }
 };
 
-export const deleteItem = createAsyncThunk("columns/deleteItem", thunk);
+export const updateItem = createAsyncThunk("columns/updateItem", thunk);
