@@ -6,7 +6,7 @@ export default async function Header() {
   const user = await getUserSession(authOptions);
 
   return (
-    <div className="w-full p-4 header">
+    <div className="w-full p-4">
       {user && (
         <div className="flex justify-between  w-full ">
           <p>Signed in as {user?.email}</p>

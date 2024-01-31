@@ -33,6 +33,14 @@ body {
   }
 }
 
+.layout {
+  @apply h-screen flex flex-col justify-between;
+}
+
+.main {
+  @apply w-screen  flex items-center justify-center;
+}
+
 .label {
   @apply block text-sm font-medium leading-6 text-gray-900;
 }
@@ -47,14 +55,6 @@ body {
 
 .container {
   @apply flex min-h-full flex-col justify-center px-6 py-12 lg:px-8;
-}
-
-.main {
-  @apply w-screen h-[95vh] flex items-center justify-center;
-}
-
-.header {
-  @apply h-[5vh];
 }
 
 .center {

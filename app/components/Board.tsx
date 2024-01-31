@@ -55,7 +55,7 @@ export function Board() {
 
   return (
     <div className="w-full bg-gray-100 rounded xl:p-4 p-4">
-      <div className="w-content py-2">
+      <div className="w-max py-2">
         <IconNavButton
           href="/item/create"
           icon={CopyPlus}
