@@ -1,4 +1,4 @@
-import { Inter } from "next/font/google";
+import { Quicksand as FontStyle } from "next/font/google";
 import {
   StoreProviderWithSession,
   SessionProvider,
@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Header from "./Header";
 import Footer from "./Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = FontStyle({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Prestalana",
@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <body className={`${inter.className} layout`}>
+      <body className={`${font.className} layout`}>
         <SessionProvider>
           <StoreProviderWithSession>
             <Header />

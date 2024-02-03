@@ -1,22 +1,18 @@
 "use client";
 import { useState, useEffect } from "react";
-import {
-  DragDropContext,
-  Draggable,
-  DropResult,
-  Droppable,
-} from "@hello-pangea/dnd";
+import { motion } from "framer-motion";
+import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Row, Col } from "react-bootstrap";
 import { CopyPlus, Trash } from "lucide-react";
 import { Columns } from "@/interfaces/Columns";
 import { ItemDelete, ItemUpdate } from "@/interfaces/Items";
-import useColumns from "@/hooks/useColumns";
+import useColumns from "@/app/components/hooks/useColumns";
 
 import { onDragEnd } from "@/utils/utils";
 import { IconNavButton } from "@/app/components/common/IconNavButton";
 import { DroppableColumn } from "./DroppableColumn";
 
-export function Board() {
+function Board() {
   const [columns, setColumns] = useState<Columns>({} as Columns);
   const [selected, setSelected] = useState<ItemDelete>({
     columnId: "",
@@ -51,10 +47,15 @@ export function Board() {
     await updateStateOrder(body);
   };
 
-  if (Object.keys(columns).length === 0) return null;
+  const isVisible = Object.keys(columns).length > 0;
 
   return (
-    <div className="w-full bg-white-to-gray rounded xl:p-4 p-4">
+    <motion.div
+      className="w-full bg-white-to-gray rounded xl:p-4 p-4"
+      initial={{ opacity: 0, scale: 0.5 }}
+      animate={{ opacity: Number(isVisible), scale: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       <div className="w-max py-2">
         <IconNavButton
           href="/item/create"
@@ -97,6 +98,8 @@ export function Board() {
           ))}
         </Row>
       </DragDropContext>
-    </div>
+    </motion.div>
   );
 }
+
+export default Board;

@@ -1,4 +1,4 @@
-import { Satisfy as FontStyle } from "next/font/google";
+import { Cormorant_Garamond as FontStyle } from "next/font/google";
 import { authOptions } from "@/lib/auth";
 import { getUserSession } from "@/lib/session";
 import LogOut from "./components/common/LogOut";
@@ -16,7 +16,7 @@ export default async function Header() {
       {user && (
         <div className="flex justify-between  w-full ">
           <p>
-            <span className={`${font.className} text-2xl`}>Signed in as</span>
+            <span className={`${font.className} text-xl`}>Signed in as</span>
             <span> {user?.email}</span>
           </p>
 

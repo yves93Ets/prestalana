@@ -3,9 +3,11 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
 
+import WithHover from "@/app/components/hoc/WithHover";
+
 export default function SigninWithGoogle() {
   return (
-    <div className="loginBtn">
+    <WithHover className="loginBtn">
       <button
         onClick={() =>
           signIn("google", {
@@ -23,6 +25,7 @@ export default function SigninWithGoogle() {
           alt="google"
         />
       </button>
-    </div>
+    </WithHover>
   );
 }
+//11111111111 add an animation on load and on empty columns ,animation on delete

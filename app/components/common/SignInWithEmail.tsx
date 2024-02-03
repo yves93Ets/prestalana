@@ -5,9 +5,10 @@ import { useFormik } from "formik";
 import { signIn } from "next-auth/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Spinner } from "react-bootstrap";
 
 import { emailValidation as validationSchema } from "@/utils/validation/schemas";
-import { Spinner } from "react-bootstrap";
+import WithHover from "@/app/components/hoc/WithHover";
 
 export default function SignInWithEmail() {
   const formik = useFormik({
@@ -54,13 +55,15 @@ export default function SignInWithEmail() {
         theme="colored"
       />
       <div className="loginBtn">
-        <Image
-          width={48}
-          height={48}
-          className="mx-auto h-10 w-auto rounded-full border border-black"
-          src="/logo.png"
-          alt="Prestalana"
-        />
+        <WithHover onlyGrow>
+          <Image
+            width={48}
+            height={48}
+            className="mx-auto h-10 w-auto rounded-full border border-black"
+            src="/logo.png"
+            alt="Prestalana"
+          />
+        </WithHover>
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
           Sign in to your account
         </h2>
@@ -87,7 +90,7 @@ export default function SignInWithEmail() {
             </div>
           </div>
         </form>
-        <div>
+        <WithHover>
           <button
             className={disabled ? "button-disabled" : "button"}
             disabled={disabled}
@@ -95,7 +98,7 @@ export default function SignInWithEmail() {
           >
             {formik.isSubmitting ? <Spinner /> : "Sign in with email"}
           </button>
-        </div>
+        </WithHover>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import { Satisfy as FontStyle } from "next/font/google";
+import { Cormorant_Garamond as FontStyle } from "next/font/google";
 import { Copyright as CopyrightBtn } from "lucide-react";
 
 const font = FontStyle({

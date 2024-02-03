@@ -1,22 +1,21 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { ArrowLeftCircle } from "lucide-react";
+import { motion } from "framer-motion";
 
 import CreateItemForm from "@/app/components/CreateItemForm";
-import { IconNavButton } from "@/app/components/common/IconNavButton";
 
 export default function Item() {
   const router = useRouter();
   return (
     <main className="main">
-      <div className="mt-10 lg:min-w-[650px]">
-        <IconNavButton
-          href="/"
-          icon={ArrowLeftCircle}
-          tooltipText="Go back to dashboard"
-        />
+      <motion.div
+        className="mt-10 lg:min-w-[650px]"
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <CreateItemForm />
-      </div>
+      </motion.div>
     </main>
   );
 }

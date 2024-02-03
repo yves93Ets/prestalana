@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Item } from "./Items";
 
 export interface Column {
@@ -10,8 +9,4 @@ export interface Column {
 
 export interface Columns {
   [key: string]: Column;
-}
-
-export interface ProviderProps {
-  children: ReactNode;
 }
