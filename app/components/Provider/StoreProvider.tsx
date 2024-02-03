@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 
 import { store, AppStore } from "@/lib/store";
 import { ColumnsActions } from "@/lib/slices/columns/columnsSlice";
-import { ProviderProps } from "@/interfaces/Columns";
+import { ChildrenProps } from "@/interfaces/Common";
 
-interface StoreProviderProps extends ProviderProps {
+interface StoreProviderProps extends ChildrenProps {
   session: any;
 }
 
