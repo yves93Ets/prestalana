@@ -7,7 +7,7 @@ export default function LogOut() {
   return (
     <LogOutBtn
       size={40}
-      className="onHover btn-rounded"
+      className="onHover btn-rounded bg-white-to-gray"
       onClick={() =>
         signOut({
           callbackUrl: `${window.location.origin}/auth`,

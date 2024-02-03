@@ -54,7 +54,7 @@ export function Board() {
   if (Object.keys(columns).length === 0) return null;
 
   return (
-    <div className="w-full bg-gray-100 rounded xl:p-4 p-4">
+    <div className="w-full bg-white-to-gray rounded xl:p-4 p-4">
       <div className="w-max py-2">
         <IconNavButton
           href="/item/create"

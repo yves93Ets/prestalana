@@ -7,6 +7,7 @@ import "./globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Header from "./Header";
+import Footer from "./Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +30,7 @@ export default function RootLayout({
           <StoreProviderWithSession>
             <Header />
             {children}
-            <div>Footer</div>
+            <Footer />
           </StoreProviderWithSession>
         </SessionProvider>
       </body>

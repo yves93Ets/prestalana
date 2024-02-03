@@ -25,7 +25,7 @@ export function DroppableColumn({
             lg:min-h-[500px]
             xl:min-h-[500px]
             rounded-lg p-2
-            //  ${snapshot.isDraggingOver ? "bg-gray-500" : "bg-gray-400"}
+            ${snapshot.isDraggingOver ? "bg-gray-500" : "bg-gray-400"}
              `}
           >
             {column.items.map((item, index) => (

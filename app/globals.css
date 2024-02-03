@@ -18,10 +18,11 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+
   background: linear-gradient(
     180deg,
-    rgba(var(--background-end-rgb), 0.2) 20%,
-    rgba(var(--background-start-rgb), 0) 100%
+    rgba(211, 211, 211, 1) 0%,
+    rgba(220, 220, 220, 1) 100%
   );
   color: black;
   margin: 0;
@@ -31,6 +32,14 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.bg-white-to-gray {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(128, 128, 128, 0.4) 100%
+  );
 }
 
 .layout {
@@ -47,6 +56,10 @@ body {
 
 .button {
   @apply flex w-full justify-center rounded-lg border-gray-300 bg-gray-300 hover:bg-gray-600 !text-black px-3 py-1;
+}
+
+.button-primary {
+  @apply bg-gray-300;
 }
 
 .button-disabled {
@@ -70,5 +83,5 @@ body {
 }
 
 .btn-rounded {
-  @apply p-2 bg-gray-400 rounded-full;
+  @apply p-2 rounded-full;
 }

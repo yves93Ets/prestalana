@@ -20,13 +20,12 @@ const CreateItemForm = () => {
     task: "",
   };
 
-  //simply to show the spinner on load
+  //slow down the spinner to actually see it xD can completely be removed
   const delay = (ms = 1000) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
     <Formik
-      className="container "
       initialValues={initialValues}
       validationSchema={validationSchema(max)}
       onSubmit={async (values, { resetForm }) => {
@@ -40,13 +39,13 @@ const CreateItemForm = () => {
       {({ values, isSubmitting, handleSubmit }) => (
         <Form
           onSubmit={handleSubmit}
-          className="m-4 rounded-lg  !bg-gray-400 center"
+          className="m-4 rounded-lg  bg-white-to-gray center p-4"
         >
-          <h1 className="w-full text-center p-4 bg-black rounded-t-lg text-white">
+          <h1 className="w-[87%] text-center p-4 rounded-t-lg border-b-gray-300 border-b-2">
             Create Item
           </h1>
-          <div className="w-full my-0 p-10 rounded-b-lg">
-            <label className="w-full text-center bg-black text-white">
+          <div className="w-full my-0 p-10 rounded-b-lg center">
+            <label className="w-full text-center button-primary rounded-2">
               {columns[values.stateOrder]?.name ?? "Invalid choice"}
             </label>
             <InlineInput
@@ -59,7 +58,7 @@ const CreateItemForm = () => {
             <InlineInput name="task" type="text" label="Task" />
 
             <Button
-              className="!border-black !bg-black px-3 py-1 "
+              className="!border-gray-300 !bg-gray-300 !text-black px-3 py-1 w-full"
               type="submit"
               disabled={isSubmitting}
             >
