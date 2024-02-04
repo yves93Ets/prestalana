@@ -11,6 +11,7 @@ import useColumns from "@/app/components/hooks/useColumns";
 import { onDragEnd } from "@/utils/utils";
 import { IconNavButton } from "@/app/components/common/IconNavButton";
 import { DroppableColumn } from "./DroppableColumn";
+import Loading from "../loading";
 
 function Board() {
   const [columns, setColumns] = useState<Columns>({} as Columns);
@@ -48,6 +49,7 @@ function Board() {
   };
 
   const isVisible = Object.keys(columns).length > 0;
+  if (!isVisible) return <Loading />;
 
   return (
     <motion.div

@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 
 import { authOptions } from "@/lib/auth";
 import { getUserSession } from "@/lib/session";
-import WithHover from "@/app/components/hoc/WithHover";
 
 import Loading from "./loading";
 
