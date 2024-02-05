@@ -1,5 +1,5 @@
 import { ItemForm } from "@/interfaces/Items";
-import { URI } from "@/utils/utils";
+import { URI } from "@/utils/columnUitls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

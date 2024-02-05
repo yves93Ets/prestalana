@@ -1,36 +1,36 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, lazy } from "react";
 import { motion } from "framer-motion";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Row, Col } from "react-bootstrap";
 import { CopyPlus, Trash } from "lucide-react";
-import { Columns } from "@/interfaces/Columns";
-import { ItemDelete, ItemUpdate } from "@/interfaces/Items";
+import { ItemDelete } from "@/interfaces/Items";
 import useColumns from "@/app/components/hooks/useColumns";
 
-import { onDragEnd } from "@/utils/utils";
 import { IconNavButton } from "@/app/components/common/IconNavButton";
 import { DroppableColumn } from "./DroppableColumn";
-import Loading from "../loading";
+
+const Animated = lazy(
+  () => import("@/app/components/common/animations/SearchingAnimated")
+);
 
 function Board() {
-  const [columns, setColumns] = useState<Columns>({} as Columns);
   const [selected, setSelected] = useState<ItemDelete>({
     columnId: "",
     itemId: "",
   });
-  const { getColumns, deleteItem, updateStateOrder } = useColumns();
-
-  useEffect(() => {
-    setColumns(getColumns);
-  }, [getColumns]);
+  const { getColumns: columns, deleteItem, updateStateOrder } = useColumns();
 
   const handleSelect = (columnId: string, itemId: string) => {
-    if (selected.columnId === columnId && selected.itemId === itemId) {
-      setSelected({ columnId: "", itemId: "" });
-      return;
-    }
+    const self = selected.columnId === columnId && selected.itemId === itemId;
+    if (self) return setSelected({ columnId: "", itemId: "" });
+
     setSelected({ columnId, itemId });
+  };
+
+  const handleDragStart = () => {
+    const hasSelection = selected.columnId !== "" && selected.itemId !== "";
+    if (hasSelection) setSelected({ columnId: "", itemId: "" });
   };
 
   const handleDelete = () => {
@@ -38,18 +38,13 @@ function Board() {
     setSelected({ columnId: "", itemId: "" });
   };
 
-  const handleDragEnd = async (result: DropResult) => {
-    onDragEnd(result, columns, setColumns);
-    const body = {
-      id: result.draggableId,
-      stateOrder: result.destination?.droppableId,
-    } as ItemUpdate;
+  const handleDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
 
-    await updateStateOrder(body);
+    updateStateOrder(result);
   };
 
   const isVisible = Object.keys(columns).length > 0;
-  if (!isVisible) return <Loading />;
 
   return (
     <motion.div
@@ -66,10 +61,7 @@ function Board() {
         />
       </div>
 
-      <DragDropContext
-        onDragStart={() => setSelected({ columnId: "", itemId: "" })}
-        onDragEnd={handleDragEnd}
-      >
+      <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Row className="justify-evenly">
           {Object.entries(columns).map(([columnId, column]) => (
             <Col
@@ -86,7 +78,7 @@ function Board() {
                   <Trash
                     onClick={handleDelete}
                     size={40}
-                    className="btn-rounded onHover !bg-gray-500 relative bottom-[60px] left-[180px]"
+                    className="btn-rounded onHover !bg-gray-500 relative bottom-[50px] left-[180px]"
                   />
                 </span>
               )}

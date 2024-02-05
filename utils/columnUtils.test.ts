@@ -1,17 +1,17 @@
 import { items, columns, dropResult, dropResultSame } from "./mockData";
-import { normalizeColumns, onDragEnd } from "./utils";
+import { normalizeColumns, onDragEnd, onDeleteItem } from "./columnUitls";
 import { Column } from "@/interfaces/Columns";
-import { Item } from "@/interfaces/Items";
+
+const mockColumns = normalizeColumns(items, columns as unknown as Column[]);
 
 describe("normalizeColumns", () => {
   it("should normalize columns correctly", () => {
-    const result = normalizeColumns(items, columns as unknown as Column[]);
     const orders = ["1", "2", "3"];
     orders.forEach((order) => {
       const length = items.filter((item) => {
         return item.stateOrder === order;
       }).length;
-      expect(result[order].items.length).toBe(length);
+      expect(mockColumns[order].items.length).toBe(length);
     });
   });
 });
@@ -27,7 +27,7 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd(dropResult, normalisezCols, setColumns);
+    onDragEnd(dropResult, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(1);
   });
@@ -36,7 +36,7 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd(dropResultSame, normalisezCols, setColumns);
+    onDragEnd(dropResultSame, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(1);
   });
@@ -45,8 +45,22 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd({} as any, normalisezCols, setColumns);
+    onDragEnd({} as any, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(0);
+  });
+});
+
+describe("onDeleteItem", () => {
+  it("should remove the selected item from the column", () => {
+    const columns = {
+      column1: {
+        items: [{ id: "item1" }, { id: "item2" }],
+      },
+    };
+    const selected = { columnId: "column1", itemId: "item1" };
+    const updatedCols = onDeleteItem(selected, mockColumns);
+
+    expect(updatedCols.column1.items).toEqual([{ id: "item2" }]);
   });
 });

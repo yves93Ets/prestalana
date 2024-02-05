@@ -1,5 +1,5 @@
 import { ItemDelete } from "@/interfaces/Items";
-import { URI } from "@/utils/utils";
+import { URI } from "@/utils/columnUitls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -12,7 +12,7 @@ import axios from "axios";
 const thunk = async (body: ItemDelete) => {
   try {
     const res = await axios.delete(`${URI.items}`, { data: body });
-    if (res.status === 200) return { ...body };
+    if (res.status === 200) return body;
 
     throw Error("Error adding item");
   } catch (error: any) {

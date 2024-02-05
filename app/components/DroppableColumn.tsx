@@ -20,7 +20,7 @@ export function DroppableColumn({
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            className={`sm:w-full  md:w-ful lg:w-56 xl:w-56 
+            className={`lg:w-56 xl:w-56
             min-h-[150px]
             lg:min-h-[500px]
             xl:min-h-[500px]

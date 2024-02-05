@@ -19,7 +19,6 @@ export async function POST(req: Request) {
   return Response.json({ item });
 }
 
-
 /**
  * @param {string} id - Id of task to update
  * @param {string} stateOrder - The order of the state. min to 1 max depends on the number of columns

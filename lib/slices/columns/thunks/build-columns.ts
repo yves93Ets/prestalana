@@ -1,4 +1,4 @@
-import { URI, normalizeColumns } from "@/utils/utils";
+import { URI, normalizeColumns } from "@/utils/columnUitls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

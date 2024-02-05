@@ -6,6 +6,7 @@ import { buildColumns } from "./thunks/build-columns";
 import { createItem } from "./thunks/create-item";
 import { deleteItem } from "./thunks/delete-item";
 import { updateItem } from "./thunks/update-item";
+import { onDeleteItem, onDragEnd } from "@/utils/columnUitls";
 
 const initialState = {
   columns: {} as Columns,
@@ -34,15 +35,18 @@ const slice = createSlice({
       .addCase(createItem.rejected, (state, action) => {})
 
       .addCase(deleteItem.fulfilled, (state, action) => {
-        const { itemId, columnId } = action.payload;
-        const items = state.columns[columnId].items;
-        const newItems = items.filter((item) => item.id !== itemId);
+        const selected = action.payload;
+        const items = onDeleteItem(selected, state.columns);
 
-        state.columns[columnId].items = newItems;
+        state.columns[selected.columnId].items = items;
       })
       .addCase(deleteItem.rejected, (state, action) => {})
 
-      .addCase(updateItem.fulfilled, (state, action) => {})
+      .addCase(updateItem.fulfilled, (state, action) => {
+        const columns = onDragEnd(action.payload, state.columns);
+
+        state.columns = columns;
+      })
       .addCase(updateItem.rejected, (state, action) => {});
   },
 });
@@ -56,5 +60,3 @@ export const ColumnsActions = {
 };
 
 export const ColumnsReducer = slice.reducer;
-
-//....11111 handle errors

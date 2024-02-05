@@ -1,20 +1,22 @@
-import { ItemUpdate } from "@/interfaces/Items";
-import { URI } from "@/utils/utils";
+import { URI } from "@/utils/columnUitls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { DropResult } from "@hello-pangea/dnd";
 
 /**
  * Create a new item the item can have a task and a stateOrder
- * @param {string} id - The id of the task to update
- * @param {string} stateOrder - The order of the state. min to 1 max depends on the number of columns
+ * @param {DropResult} result - The drag n drop result which includes id and state order
  */
 
-const thunk = async (body: ItemUpdate) => {
+const thunk = async (body: DropResult) => {
   try {
-    const res = await axios.put(`${URI.items}`, body );
-    if (res.status === 200) return { ...body };
+    if (body.source.droppableId === body.destination?.droppableId) return body;
 
-    throw Error("Error adding item");
+    const id = body.draggableId;
+    const stateOrder = body.destination?.droppableId;
+    axios.put(`${URI.items}`, { id, stateOrder });
+
+    return body;
   } catch (error: any) {
     throw Error("Error fetching data", error);
   }

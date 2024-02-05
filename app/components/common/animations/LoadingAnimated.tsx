@@ -1,4 +1,5 @@
 "use client";
+
 import Lottie from "react-lottie-player";
 import animation from "@/app/animation/loading.json";
 

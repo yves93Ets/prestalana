@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 
 import { authOptions } from "@/lib/auth";
 import { getUserSession } from "@/lib/session";
-
 import Loading from "./loading";
 
 const DynamicBoard = dynamic(() => import("./components/Board"), {
@@ -20,7 +19,7 @@ export default async function Home() {
 
   return (
     <main className="main bg-grey-300">
-      <div className=" bg-grey-200 w-full p-4">
+      <div className="bg-grey-200 w-full p-4">
         {user ? (
           <DynamicBoard />
         ) : (
