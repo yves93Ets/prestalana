@@ -70,7 +70,7 @@ function Board() {
               md={12}
               lg="auto"
               xl="auto"
-              className="w-56 sm:w-full  md:w-full rounded-lg"
+              className="md:w-56 w-56 sm:w-full rounded-lg"
             >
               <h3 className="rounded-lg p-2 my-2">{column.name}</h3>
               {selected.columnId === columnId && (
