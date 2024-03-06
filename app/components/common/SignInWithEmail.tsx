@@ -10,7 +10,7 @@ import { Spinner } from "react-bootstrap";
 import { emailValidation as validationSchema } from "@/utils/validation/schemas";
 import WithHover from "@/app/components/hoc/WithHover";
 
-export default function SignInWithEmail() {
+export function SignInWithEmail() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {

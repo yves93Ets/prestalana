@@ -9,7 +9,7 @@ import { useAnimate } from "framer-motion";
 import useColumns from "@/app/components/hooks/useColumns";
 import { itemValidationSchema as validationSchema } from "@/utils/validation/schemas";
 import { ItemForm } from "@/interfaces/Items";
-import { IconNavButton } from "@/app/components/common/IconNavButton";
+import { IconNavButton } from "@/app/components/common";
 
 import InlineInput from "./common/InlineInput";
 import Spinner from "./common/Spinner";

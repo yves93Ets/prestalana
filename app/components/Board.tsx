@@ -1,17 +1,22 @@
 "use client";
+
 import { useState, lazy } from "react";
 import { motion } from "framer-motion";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Row, Col } from "react-bootstrap";
 import { CopyPlus, Trash } from "lucide-react";
-import { ItemDelete } from "@/interfaces/Items";
-import useColumns from "@/app/components/hooks/useColumns";
 
-import { IconNavButton } from "@/app/components/common/IconNavButton";
+import { ItemDelete } from "@/interfaces/Items";
+import { IconNavButton } from "@/app/components/common";
+import useColumns from "@/app/components/hooks/useColumns";
+import FormColumnAction from "@/app/components/column/FormColumnAction";
+
 import { DroppableColumn } from "./DroppableColumn";
 
-const Animated = lazy(
-  () => import("@/app/components/common/animations/SearchingAnimated")
+const Animated = lazy(() =>
+  import("@/app/components/common/animations/SearchingAnimated").then(
+    (module) => ({ default: module.SearchingAnimated })
+  )
 );
 
 function Board() {
@@ -53,14 +58,14 @@ function Board() {
       animate={{ opacity: Number(isVisible), scale: 1 }}
       transition={{ duration: 0.5 }}
     >
-      <div className="w-max py-2">
+      <div className="py-2 flex justify-between">
         <IconNavButton
           href="/item/create"
           icon={CopyPlus}
           tooltipText="Add an item"
         />
+        <FormColumnAction />
       </div>
-
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Row className="justify-evenly">
           {Object.entries(columns).map(([columnId, column]) => (
@@ -72,16 +77,20 @@ function Board() {
               xl="auto"
               className="md:w-56 w-56 sm:w-full rounded-lg"
             >
-              <h3 className="rounded-lg p-2 my-2">{column.name}</h3>
-              {selected.columnId === columnId && (
-                <span className="absolute">
-                  <Trash
-                    onClick={handleDelete}
-                    size={40}
-                    className="btn-rounded onHover !bg-gray-500 relative bottom-[50px] left-[180px]"
-                  />
+              <h3 className="rounded-lg p-2 my-2 flex justify-between">
+                {column.name}
+                <span className="cursor-pointer">
+                  {selected.columnId === columnId ? (
+                    <Trash
+                      onClick={handleDelete}
+                      size={32}
+                      className="btn-rounded onHover !bg-gray-500 "
+                    />
+                  ) : (
+                    "..."
+                  )}
                 </span>
-              )}
+              </h3>
               <DroppableColumn
                 columnId={columnId}
                 column={column}

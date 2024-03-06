@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 
 import WithHover from "@/app/components/hoc/WithHover";
 
-export default function SigninWithGoogle() {
+export function SigninWithGoogle() {
   return (
     <WithHover className="loginBtn">
       <button

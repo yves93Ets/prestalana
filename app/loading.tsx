@@ -1,7 +1,9 @@
 import { lazy } from "react";
 
-const Animated = lazy(
-  () => import("@/app/components/common/animations/LoadingAnimated")
+const Animated = lazy(() =>
+  import("@/app/components/common/animations/LoadingAnimated").then(
+    (module) => ({ default: module.LoadingAnimated })
+  )
 );
 
 export default function Loading() {
