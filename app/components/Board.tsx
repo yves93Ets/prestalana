@@ -3,7 +3,7 @@
 import { useState, lazy } from "react";
 import { motion } from "framer-motion";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Dropdown } from "react-bootstrap";
 import { CopyPlus, Trash } from "lucide-react";
 
 import { ItemDelete } from "@/interfaces/Items";
@@ -12,6 +12,7 @@ import useColumns from "@/app/components/hooks/useColumns";
 import FormColumnAction from "@/app/components/column/FormColumnAction";
 
 import { DroppableColumn } from "./DroppableColumn";
+import { handleDeleteColumn } from "../column/actions";
 
 const Animated = lazy(() =>
   import("@/app/components/common/animations/SearchingAnimated").then(
@@ -77,7 +78,7 @@ function Board() {
               xl="auto"
               className="md:w-56 w-56 sm:w-full rounded-lg"
             >
-              <h3 className="rounded-lg p-2 my-2 flex justify-between">
+              <h3 className="rounded-lg p-2 my-2 flex justify-between ">
                 {column.name}
                 <span className="cursor-pointer">
                   {selected.columnId === columnId ? (
@@ -87,7 +88,18 @@ function Board() {
                       className="btn-rounded onHover !bg-gray-500 "
                     />
                   ) : (
-                    "..."
+                    <Dropdown>
+                      <Dropdown.Toggle className="border-none onHover text-black p-0">
+                        ...
+                      </Dropdown.Toggle>
+                      <Dropdown.Menu>
+                        <Dropdown.Item
+                          onClick={() => handleDeleteColumn(column.id)}
+                        >
+                          Delete Column
+                        </Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
                   )}
                 </span>
               </h3>

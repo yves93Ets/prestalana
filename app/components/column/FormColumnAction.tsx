@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import { Columns3 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
-import { addColumn } from "@/app/column/create/actions";
+import { addColumn } from "@/app/column/actions";
 import useColumns from "@/app/components/hooks/useColumns";
 import { IconButton } from "@/app/components/common";
 import Spinner from "../common/Spinner";
@@ -11,10 +11,14 @@ import Spinner from "../common/Spinner";
 const FormColumnAction = ({}) => {
   const { getColumns: columns } = useColumns();
   const [show, setShow] = useState(false);
+  const { pending } = useFormStatus();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const { pending } = useFormStatus();
+  const handelSubmit = (form: FormData) => {
+    handleClose();
+    addColumn(form);
+  };
 
   return (
     <div>
@@ -24,7 +28,7 @@ const FormColumnAction = ({}) => {
         tooltipText="Add a Column"
       />
       <Modal show={show} onHide={handleClose}>
-        <form action={addColumn}>
+        <form action={handelSubmit}>
           <Modal.Dialog className="flex  rounded xl:p-4 p-4 min-w-[450px] sm:w-full min-h-[250px]">
             <Modal.Header closeButton>
               <Modal.Title>Add column</Modal.Title>

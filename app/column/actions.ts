@@ -16,3 +16,14 @@ export const addColumn = async (form: FormData) => {
     return error;
   }
 };
+
+export const handleDeleteColumn = async (id: string) => {
+  console.log(1111, id);
+  try {
+    await prisma.column.delete({ where: { id } });
+
+    revalidatePath("/");
+  } catch (error) {
+    return error;
+  }
+};

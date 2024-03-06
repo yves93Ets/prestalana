@@ -27,7 +27,12 @@ body {
   color: black;
   margin: 0;
 }
-
+.dropdown-toggle::after {
+  border: 0;
+}
+.btn.show {
+  background: inherit;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
