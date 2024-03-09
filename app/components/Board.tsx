@@ -9,10 +9,13 @@ import { CopyPlus, Trash } from "lucide-react";
 import { ItemDelete } from "@/interfaces/Items";
 import { IconNavButton } from "@/app/components/common";
 import useColumns from "@/app/components/hooks/useColumns";
-import FormColumnAction from "@/app/components/column/FormColumnAction";
+import {
+  CreateColumnAction,
+  RenameColumnAction,
+} from "@/app/components/column";
 
 import { DroppableColumn } from "./DroppableColumn";
-import { handleDeleteColumn } from "../column/actions";
+import { deleteColumn } from "../column/column-actions";
 
 const Animated = lazy(() =>
   import("@/app/components/common/animations/SearchingAnimated").then(
@@ -65,7 +68,7 @@ function Board() {
           icon={CopyPlus}
           tooltipText="Add an item"
         />
-        <FormColumnAction />
+        <CreateColumnAction />
       </div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
         <Row className="justify-evenly">
@@ -89,14 +92,18 @@ function Board() {
                     />
                   ) : (
                     <Dropdown>
-                      <Dropdown.Toggle className="border-none onHover text-black p-0">
+                      <Dropdown.Toggle className="border-none  onHoverInherit text-black p-0 btn-primary">
                         ...
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item
-                          onClick={() => handleDeleteColumn(column.id)}
-                        >
-                          Delete Column
+                        <Dropdown.Item onClick={() => deleteColumn(column.id)}>
+                          Delete
+                        </Dropdown.Item>
+                        <Dropdown.Item as="div">
+                          <RenameColumnAction
+                            id={column.id}
+                            title={column.name}
+                          />
                         </Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>

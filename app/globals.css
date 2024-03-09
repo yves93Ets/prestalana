@@ -33,6 +33,7 @@ body {
 .btn.show {
   background: inherit;
 }
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -85,6 +86,10 @@ body {
 
 .onHover {
   @apply hover:bg-gray-100 hover:cursor-pointer;
+}
+
+.onHoverInherit {
+  @apply hover:cursor-pointer hover:bg-inherit active:bg-inherit;
 }
 
 .btn-rounded {

@@ -3,15 +3,17 @@ import { Button, Modal } from "react-bootstrap";
 import { Columns3 } from "lucide-react";
 import { useFormStatus } from "react-dom";
 
-import { addColumn } from "@/app/column/actions";
+import { addColumn } from "@/app/column/column-actions";
 import useColumns from "@/app/components/hooks/useColumns";
 import { IconButton } from "@/app/components/common";
 import Spinner from "../common/Spinner";
 
-const FormColumnAction = ({}) => {
+export const CreateColumnAction = ({}) => {
   const { getColumns: columns } = useColumns();
   const [show, setShow] = useState(false);
   const { pending } = useFormStatus();
+  const colSize = Object.keys(columns).length;
+  const isMaxed = colSize >= 5;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -36,17 +38,24 @@ const FormColumnAction = ({}) => {
 
             <Modal.Body className="flex gap-2 flex-col">
               <p>Title</p>
+
               <input
+                disabled={isMaxed}
                 type="text"
                 name="name"
                 className="border border-slate-300 rounded px-2 py-1 
             outline-none"
               />
+              {isMaxed && (
+                <p className="text-red-500">
+                  Number of columns is max out need to delete at least 1
+                </p>
+              )}
               <input
                 type="text"
                 name="order"
                 readOnly
-                value={Object.keys(columns).length + 1}
+                value={colSize + 1}
                 className="hidden"
               />
             </Modal.Body>
@@ -71,5 +80,3 @@ const FormColumnAction = ({}) => {
     </div>
   );
 };
-
-export default FormColumnAction;

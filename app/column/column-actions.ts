@@ -8,6 +8,7 @@ export const addColumn = async (form: FormData) => {
     name: form.get("name") as string,
     order: Number(form.get("order")),
   };
+
   try {
     await prisma.column.create({ data });
 
@@ -17,8 +18,7 @@ export const addColumn = async (form: FormData) => {
   }
 };
 
-export const handleDeleteColumn = async (id: string) => {
-  console.log(1111, id);
+export const deleteColumn = async (id: string) => {
   try {
     await prisma.column.delete({ where: { id } });
 
@@ -26,4 +26,15 @@ export const handleDeleteColumn = async (id: string) => {
   } catch (error) {
     return error;
   }
+};
+
+export const renameColumn = async (form: FormData) => {
+  const name = form.get("name") as string;
+  const id = form.get("id") as string;
+
+  await prisma.column.update({
+    where: { id },
+    data: { name },
+  });
+  revalidatePath("/");
 };

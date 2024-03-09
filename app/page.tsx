@@ -18,16 +18,18 @@ export default async function Home() {
   const user = await getUserSession(authOptions);
 
   return (
-    <main className="main bg-grey-300">
+    <main className="main bg-grey-300 ">
       <div className="bg-grey-200 w-full p-4">
         {user ? (
           <DynamicBoard />
         ) : (
-          <button className="button w-auto bg-white-to-gray p-4">
-            <Link className="no-underline text-black" href="/auth">
-              Go to login
-            </Link>
-          </button>
+          <div className="center">
+            <button className="button w-auto bg-white-to-gray p-4">
+              <Link className="no-underline text-black" href="/auth">
+                Go to login
+              </Link>
+            </button>
+          </div>
         )}
       </div>
     </main>
