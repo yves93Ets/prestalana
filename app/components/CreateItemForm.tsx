@@ -9,15 +9,14 @@ import { useAnimate } from "framer-motion";
 import useColumns from "@/app/components/hooks/useColumns";
 import { itemValidationSchema as validationSchema } from "@/utils/validation/schemas";
 import { ItemForm } from "@/interfaces/Items";
-import { IconNavButton } from "@/app/components/common/IconNavButton";
+import { IconNavButton } from "@/app/components/common";
 
 import InlineInput from "./common/InlineInput";
 import Spinner from "./common/Spinner";
 
 const CreateItemForm = () => {
   const [scope, animate] = useAnimate();
-  const { getColumns, addNewItem } = useColumns();
-  const columns = getColumns;
+  const { getColumns: columns, addNewItem } = useColumns();
   const max = Object.keys(columns).length;
   const initialValues = {
     stateOrder: 1,
@@ -28,7 +27,6 @@ const CreateItemForm = () => {
     animate(scope.current, { opacity: 1 }, { duration: 1 });
   }, [max, animate, scope]);
 
-  //slow down the spinner to actually see it xD can completely be removed
   const delay = (ms = 1000) =>
     new Promise((resolve) => setTimeout(resolve, ms));
 

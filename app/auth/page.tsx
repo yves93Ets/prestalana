@@ -2,8 +2,7 @@ import { redirect } from "next/navigation";
 
 import { getUserSession } from "@/lib/session";
 import { authOptions } from "@/lib/auth";
-import SigninWithGoogle from "../components/common/SigninWithGoogle";
-import SignInWithEmail from "../components/common/SignInWithEmail";
+import { SigninWithGoogle, SignInWithEmail } from "../components/common/";
 
 export const metadata = {
   title: "Prestalana-Auth",

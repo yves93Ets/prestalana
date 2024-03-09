@@ -1,4 +1,3 @@
-import { ComponentType } from "react";
 import Link from "next/link";
 import { Tooltip } from "react-tooltip";
 

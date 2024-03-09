@@ -29,8 +29,27 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
+# Docker
+
+inside docer folder run
+
+> docker-compose up -d
+> docker exec -it mongodb bash
+> mongosh --username root --password root --authenticationDatabase admin
+> show dbs
+>
+> in .env file add : DATABASE_URL=mongodb://rooot:root@localhost:27017/trimm?authSource=admin
+
+https://www.youtube.com/watch?v=CQk9AOPh5pw
+
 ### TODO
 
-- dev slownes
-- add second font
-- maybe re-css create item
+- add lanes with short server functions
+
+  - add lane :D
+  - create form
+  - reorder lanes
+  - handle error on create
+  - delete column
+
+- docerize db
