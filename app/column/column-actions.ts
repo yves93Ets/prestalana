@@ -14,7 +14,7 @@ export const addColumn = async (form: FormData) => {
 
     revalidatePath("/");
   } catch (error) {
-    return error;
+    console.error(error);
   }
 };
 
@@ -22,19 +22,22 @@ export const deleteColumn = async (id: string) => {
   try {
     await prisma.column.delete({ where: { id } });
 
-    revalidatePath("/");
+    revalidatePath("/", "layout");
   } catch (error) {
-    return error;
+    console.error(error);
   }
 };
 
 export const renameColumn = async (form: FormData) => {
-  const name = form.get("name") as string;
-  const id = form.get("id") as string;
-
-  await prisma.column.update({
-    where: { id },
-    data: { name },
-  });
-  revalidatePath("/");
+  try {
+    const name = form.get("name") as string;
+    const id = form.get("id") as string;
+    await prisma.column.update({
+      where: { id },
+      data: { name },
+    });
+    revalidatePath("/", "layout");
+  } catch (error) {
+    console.error(error);
+  }
 };

@@ -7,9 +7,11 @@ import axios from "axios";
  *
  */
 
+const options = { headers: { "Cache-Control": "no-store" } };
+
 const thunk = async () => {
-  const columnsPromise = axios.get(URI.columns);
-  const itemsPromise = axios.get(URI.items);
+  const columnsPromise = axios.get(URI.columns, options);
+  const itemsPromise = axios.get(URI.items, options);
 
   try {
     const [itemsRes, colsRes] = await Promise.all([

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, lazy } from "react";
+import { useState, lazy, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
 import { Row, Col, Dropdown } from "react-bootstrap";
@@ -28,7 +28,12 @@ function Board() {
     columnId: "",
     itemId: "",
   });
-  const { getColumns: columns, deleteItem, updateStateOrder } = useColumns();
+  const {
+    getColumns: columns,
+    deleteItem,
+    updateStateOrder,
+    setColumnsInStore,
+  } = useColumns();
 
   const handleSelect = (columnId: string, itemId: string) => {
     const self = selected.columnId === columnId && selected.itemId === itemId;
@@ -47,12 +52,20 @@ function Board() {
     setSelected({ columnId: "", itemId: "" });
   };
 
+  const handleDeleteColumn = async (id: string) => {
+    await deleteColumn(id);
+    setColumnsInStore();
+  };
+
   const handleDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
     updateStateOrder(result);
   };
 
+  useEffect(() => {
+    setColumnsInStore();
+  }, []);
   const isVisible = Object.keys(columns).length > 0;
 
   return (
@@ -96,7 +109,9 @@ function Board() {
                         ...
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item onClick={() => deleteColumn(column.id)}>
+                        <Dropdown.Item
+                          onClick={() => handleDeleteColumn(column.id)}
+                        >
                           Delete
                         </Dropdown.Item>
                         <Dropdown.Item as="div">
