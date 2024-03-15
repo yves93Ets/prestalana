@@ -9,7 +9,7 @@ import { IconButton } from "@/app/components/common";
 import Spinner from "../common/Spinner";
 
 export const CreateColumnAction = ({}) => {
-  const { getColumns: columns } = useColumns();
+  const { getColumns: columns, setColumnsInStore } = useColumns();
   const [show, setShow] = useState(false);
   const { pending } = useFormStatus();
   const colSize = Object.keys(columns).length;
@@ -17,9 +17,10 @@ export const CreateColumnAction = ({}) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handelSubmit = (form: FormData) => {
+  const handelSubmit = async (form: FormData) => {
+    await addColumn(form);
+    setColumnsInStore();
     handleClose();
-    addColumn(form);
   };
 
   return (
@@ -43,6 +44,7 @@ export const CreateColumnAction = ({}) => {
                 disabled={isMaxed}
                 type="text"
                 name="name"
+                autoFocus
                 className="border border-slate-300 rounded px-2 py-1 
             outline-none"
               />

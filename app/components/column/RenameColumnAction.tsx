@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { useFormStatus } from "react-dom";
 
-import { renameColumn, addColumn } from "@/app/column/column-actions";
+import { renameColumn } from "@/app/column/column-actions";
 import Spinner from "../common/Spinner";
+import useColumns from "@/app/components/hooks/useColumns";
 
 export const RenameColumnAction = ({
   id,
@@ -12,13 +13,15 @@ export const RenameColumnAction = ({
   id: string;
   title: string;
 }) => {
+  const { setColumnsInStore } = useColumns();
   const [show, setShow] = useState(false);
   const { pending } = useFormStatus();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const handelSubmit = (form: FormData) => {
+  const handelSubmit = async (form: FormData) => {
+    await renameColumn(form);
+    setColumnsInStore();
     handleClose();
-    renameColumn(form);
   };
 
   return (
@@ -38,6 +41,7 @@ export const RenameColumnAction = ({
                 placeholder={title}
                 type="text"
                 name="name"
+                autoFocus
                 className="border border-slate-300 rounded px-2 py-1 
             outline-none"
               />
