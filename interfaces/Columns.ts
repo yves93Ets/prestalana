@@ -1,10 +1,13 @@
 import { Item } from "./Items";
 
-export interface Column {
+export interface DBColumn {
   id: string;
   name: string;
-  items: Item[];
   order: number;
+}
+
+export interface Column extends DBColumn {
+  items: Item[];
 }
 
 export interface Columns {

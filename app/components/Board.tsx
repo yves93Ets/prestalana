@@ -65,7 +65,9 @@ function Board() {
 
   useEffect(() => {
     setColumnsInStore();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const isVisible = Object.keys(columns).length > 0;
 
   return (

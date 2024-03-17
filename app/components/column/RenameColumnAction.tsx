@@ -18,8 +18,9 @@ export const RenameColumnAction = ({
   const { pending } = useFormStatus();
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const renameWithId = renameColumn.bind(null, id);
   const handelSubmit = async (form: FormData) => {
-    await renameColumn(form);
+    await renameWithId(form);
     setColumnsInStore();
     handleClose();
   };
@@ -33,7 +34,6 @@ export const RenameColumnAction = ({
             <Modal.Header closeButton>
               <Modal.Title>Rename column</Modal.Title>
             </Modal.Header>
-
             <Modal.Body className="flex gap-2 flex-col">
               <p>New Title</p>
 
@@ -44,13 +44,6 @@ export const RenameColumnAction = ({
                 autoFocus
                 className="border border-slate-300 rounded px-2 py-1 
             outline-none"
-              />
-              <input
-                type="text"
-                name="id"
-                readOnly
-                value={id}
-                className="hidden"
               />
             </Modal.Body>
 

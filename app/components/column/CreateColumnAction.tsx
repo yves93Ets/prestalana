@@ -17,8 +17,9 @@ export const CreateColumnAction = ({}) => {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const addColumnWithOrder = addColumn.bind(null, colSize + 1);
   const handelSubmit = async (form: FormData) => {
-    await addColumn(form);
+    await addColumnWithOrder(form);
     setColumnsInStore();
     handleClose();
   };
@@ -39,7 +40,6 @@ export const CreateColumnAction = ({}) => {
 
             <Modal.Body className="flex gap-2 flex-col">
               <p>Title</p>
-
               <input
                 disabled={isMaxed}
                 type="text"
@@ -53,13 +53,6 @@ export const CreateColumnAction = ({}) => {
                   Number of columns is max out need to delete at least 1
                 </p>
               )}
-              <input
-                type="text"
-                name="order"
-                readOnly
-                value={colSize + 1}
-                className="hidden"
-              />
             </Modal.Body>
 
             <Modal.Footer>

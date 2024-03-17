@@ -11,7 +11,6 @@ export const URI = {
 
 export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
   const sortedArray = columns.sort((a, b) => a.order - b.order);
-
   const groupedByState = items.reduce((acc: { [key: string]: any[] }, obj) => {
     const { stateOrder, ...rest } = obj;
 

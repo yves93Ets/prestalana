@@ -1,3 +1,5 @@
+import { getColumns } from "@/app/column/column-actions";
+import { Column } from "@/interfaces/Columns";
 import { URI, normalizeColumns } from "@/utils/columnUitls";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
@@ -7,26 +9,19 @@ import axios from "axios";
  *
  */
 
-const options = { headers: { "Cache-Control": "no-store" } };
-
 const thunk = async () => {
-  const columnsPromise = axios.get(URI.columns, options);
-  const itemsPromise = axios.get(URI.items, options);
+  const itemsPromise = axios.get(URI.items);
 
   try {
-    const [itemsRes, colsRes] = await Promise.all([
-      itemsPromise,
-      columnsPromise,
-    ]);
+    const [itemsRes, cols] = await Promise.all([itemsPromise, getColumns()]);
 
-    if (itemsRes.status === 200 && colsRes.status === 200) {
+    if (itemsRes.status === 200) {
       const items = itemsRes.data.items;
-      const cols = colsRes.data.columns;
-      const columns = normalizeColumns(items, cols);
+
+      const columns = normalizeColumns(items, cols as Column[]);
 
       return columns;
     }
-
     throw Error("Error building columns");
   } catch (error: any) {
     throw Error("Error fetching data", error);
