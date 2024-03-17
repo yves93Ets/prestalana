@@ -112,6 +112,8 @@ function Board() {
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
                         <Dropdown.Item
+                          as="div"
+                          className=" dropdown-button"
                           onClick={() => handleDeleteColumn(column.id)}
                         >
                           Delete
