@@ -33,7 +33,7 @@ export const CreateColumnAction = ({}) => {
       />
       <Modal show={show} onHide={handleClose}>
         <form action={handelSubmit}>
-          <Modal.Dialog className="flex  rounded xl:p-4 p-4 min-w-[450px] sm:w-full min-h-[250px]">
+          <Modal.Dialog className="flex  rounded xl:p-4 p-4  sm:w-full min-h-[250px]">
             <Modal.Header closeButton>
               <Modal.Title>Add column</Modal.Title>
             </Modal.Header>

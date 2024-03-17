@@ -107,7 +107,7 @@ function Board() {
                     />
                   ) : (
                     <Dropdown>
-                      <Dropdown.Toggle className="border-none  onHoverInherit text-black p-0 btn-primary">
+                      <Dropdown.Toggle as="span" className="hide-toggle">
                         ...
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
@@ -116,7 +116,7 @@ function Board() {
                         >
                           Delete
                         </Dropdown.Item>
-                        <Dropdown.Item as="div">
+                        <Dropdown.Item as="div" className=" dropdown-button">
                           <RenameColumnAction
                             id={column.id}
                             title={column.name}

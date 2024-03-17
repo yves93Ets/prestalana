@@ -34,6 +34,14 @@ body {
   background: inherit;
 }
 
+.hide-toggle::after {
+  display: none !important;
+}
+
+.dropdown-button:active {
+  background: #9ca3af !important;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

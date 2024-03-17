@@ -27,10 +27,10 @@ export const RenameColumnAction = ({
 
   return (
     <>
-      <p onClick={handleShow}>Rename</p>
+      <span onClick={handleShow}>Rename</span>
       <Modal show={show} onHide={handleClose}>
         <form action={handelSubmit}>
-          <Modal.Dialog className="flex  rounded xl:p-4 p-4 min-w-[450px] sm:w-full min-h-[250px]">
+          <Modal.Dialog className="flex  rounded xl:p-4 p-4 sm:w-full min-h-[250px]">
             <Modal.Header closeButton>
               <Modal.Title>Rename column</Modal.Title>
             </Modal.Header>
