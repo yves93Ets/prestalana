@@ -16,7 +16,7 @@ export default async function SignUp() {
   return (
     <div className="space-y-6 h-[600px] w-[600px]  bg-white-to-gray rounded center self-center">
       <SignInWithEmail />
-      <SigninWithGoogle />
+      {/* <SigninWithGoogle /> */}
     </div>
   );
 }

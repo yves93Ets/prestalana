@@ -29,6 +29,6 @@ export function SigninWithGoogle() {
   );
 }
 
-// reorder columns
+// reorder columns on drg n drop
 //11111111111  add an animation on load and on empty columns ,animation on delete
 //....11111 add actions for columns handle errors

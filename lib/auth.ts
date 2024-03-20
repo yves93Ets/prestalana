@@ -9,6 +9,7 @@ const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
 
 const session: Partial<SessionOptions> = { strategy: "jwt" };
 const jwt = { secret: process.env.NEXTAUTH_SECRET };
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as any,
   session,
