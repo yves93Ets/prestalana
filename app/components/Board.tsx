@@ -14,7 +14,7 @@ import {
   RenameColumnAction,
 } from "@/app/components/column";
 
-import { DroppableColumn } from "./DroppableColumn";
+import { DroppableItem } from "./dnd";
 import { deleteColumn } from "../column/column-actions";
 
 const Animated = lazy(() =>
@@ -28,12 +28,8 @@ function Board() {
     columnId: "",
     itemId: "",
   });
-  const {
-    getColumns: columns,
-    deleteItem,
-    updateStateOrder,
-    setColumnsInStore,
-  } = useColumns();
+  const { columns, deleteItem, updateStateOrder, setColumnsInStore } =
+    useColumns();
 
   const handleSelect = (columnId: string, itemId: string) => {
     const self = selected.columnId === columnId && selected.itemId === itemId;
@@ -94,7 +90,7 @@ function Board() {
               md={12}
               lg="auto"
               xl="auto"
-              className="md:w-56 w-56 sm:w-full rounded-lg"
+              className="md:w-56 w-56 sm:w-full rounded-lg min-w-[200px]"
             >
               <h3 className="rounded-lg p-2 my-2 flex justify-between ">
                 {column.name}
@@ -129,7 +125,7 @@ function Board() {
                   )}
                 </span>
               </h3>
-              <DroppableColumn
+              <DroppableItem
                 columnId={columnId}
                 column={column}
                 itemId={selected.itemId}

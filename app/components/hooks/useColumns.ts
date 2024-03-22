@@ -19,14 +19,14 @@ const useColumns = () => {
   const updateStateOrder = (body: DropResult) =>
     dispatch(ColumnsActions.updateItem(body));
 
-  const getColumns = useAppSelector(
+  const columns = useAppSelector(
     ({ columnsState }) => columnsState.columns,
     shallowEqual
   );
 
   return {
     setColumnsInStore,
-    getColumns,
+    columns,
     addNewItem,
     deleteItem,
     updateStateOrder,

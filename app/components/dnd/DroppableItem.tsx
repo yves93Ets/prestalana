@@ -1,18 +1,18 @@
 import { Draggable, Droppable } from "@hello-pangea/dnd";
 import { Column } from "@/interfaces/Columns";
 
-interface DroppableColumnProps {
+interface DroppableItemProps {
   handleSelect: (columnId: string, itemId: string) => void;
   columnId: string;
   column: Column;
   itemId: string;
 }
-export function DroppableColumn({
+export function DroppableItem({
   handleSelect,
   columnId,
   column,
   itemId,
-}: DroppableColumnProps) {
+}: DroppableItemProps) {
   return (
     <Droppable droppableId={columnId} key={columnId}>
       {(provided, snapshot) => (

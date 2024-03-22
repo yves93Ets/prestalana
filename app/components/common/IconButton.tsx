@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Tooltip } from "react-tooltip";
 
 interface IconButtonProps {

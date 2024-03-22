@@ -16,7 +16,7 @@ import Spinner from "./common/Spinner";
 
 const CreateItemForm = () => {
   const [scope, animate] = useAnimate();
-  const { getColumns: columns, addNewItem } = useColumns();
+  const { columns, addNewItem } = useColumns();
   const max = Object.keys(columns).length;
   const initialValues = {
     stateOrder: 1,

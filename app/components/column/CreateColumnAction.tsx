@@ -9,7 +9,7 @@ import { IconButton } from "@/app/components/common";
 import Spinner from "../common/Spinner";
 
 export const CreateColumnAction = ({}) => {
-  const { getColumns: columns, setColumnsInStore } = useColumns();
+  const { columns, setColumnsInStore } = useColumns();
   const [show, setShow] = useState(false);
   const { pending } = useFormStatus();
   const colSize = Object.keys(columns).length;
