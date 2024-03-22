@@ -1,4 +1,4 @@
-import { URI } from "@/utils/columnUitls";
+import { URI } from "@/utils/columnUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { DropResult } from "@hello-pangea/dnd";

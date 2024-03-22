@@ -1,7 +1,7 @@
 "use server";
 
+import { SwapColumns } from "@/interfaces/Columns";
 import { prisma } from "@/lib/prisma";
-import { revalidatePath } from "next/cache";
 
 export const getColumns = async () => {
   try {
@@ -46,6 +46,41 @@ export const renameColumn = async (id: string, form: FormData) => {
       where: { id },
       data: { name },
     });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const swapColumns = async ({
+  id,
+  order,
+  itemIds,
+  srcId,
+  srcOrder,
+  srcItemIds,
+}: SwapColumns) => {
+  try {
+    const dest = prisma.column.update({
+      where: { id },
+      data: { order: order },
+    });
+
+    const src = prisma.column.update({
+      where: { id: srcId },
+      data: { order: srcOrder },
+    });
+
+    const srcItems = prisma.item.updateMany({
+      where: { id: { in: srcItemIds } },
+      data: { stateOrder: order.toString() },
+    });
+
+    const items = prisma.item.updateMany({
+      where: { id: { in: itemIds } },
+      data: { stateOrder: srcOrder.toString() },
+    });
+
+    await Promise.all([dest, src, srcItems, items]);
   } catch (error) {
     console.error(error);
   }

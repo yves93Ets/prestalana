@@ -19,6 +19,9 @@ const useColumns = () => {
   const updateStateOrder = (body: DropResult) =>
     dispatch(ColumnsActions.updateItem(body));
 
+  const updateColumnOrder = (body: DropResult) =>
+    dispatch(ColumnsActions.updateColumn(body));
+
   const columns = useAppSelector(
     ({ columnsState }) => columnsState.columns,
     shallowEqual
@@ -30,6 +33,7 @@ const useColumns = () => {
     addNewItem,
     deleteItem,
     updateStateOrder,
+    updateColumnOrder,
   };
 };
 

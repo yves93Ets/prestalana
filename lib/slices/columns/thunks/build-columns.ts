@@ -1,6 +1,6 @@
 import { getColumns } from "@/app/column/column-actions";
 import { Column } from "@/interfaces/Columns";
-import { URI, normalizeColumns } from "@/utils/columnUitls";
+import { URI, normalizeColumns } from "@/utils/columnUtils";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 

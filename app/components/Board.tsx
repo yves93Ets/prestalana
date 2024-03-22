@@ -3,19 +3,14 @@
 import { useState, lazy, useEffect } from "react";
 import { motion } from "framer-motion";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd";
-import { Row, Col, Dropdown } from "react-bootstrap";
-import { CopyPlus, Trash } from "lucide-react";
+import { CopyPlus } from "lucide-react";
 
 import { ItemDelete } from "@/interfaces/Items";
 import { IconNavButton } from "@/app/components/common";
 import useColumns from "@/app/components/hooks/useColumns";
-import {
-  CreateColumnAction,
-  RenameColumnAction,
-} from "@/app/components/column";
+import { CreateColumnAction } from "@/app/components/column";
 
-import { DroppableItem } from "./dnd";
-import { deleteColumn } from "../column/column-actions";
+import { DroppableColumn } from "./dnd";
 
 const Animated = lazy(() =>
   import("@/app/components/common/animations/SearchingAnimated").then(
@@ -28,32 +23,21 @@ function Board() {
     columnId: "",
     itemId: "",
   });
-  const { columns, deleteItem, updateStateOrder, setColumnsInStore } =
+
+  const { columns, updateStateOrder, setColumnsInStore, updateColumnOrder } =
     useColumns();
-
-  const handleSelect = (columnId: string, itemId: string) => {
-    const self = selected.columnId === columnId && selected.itemId === itemId;
-    if (self) return setSelected({ columnId: "", itemId: "" });
-
-    setSelected({ columnId, itemId });
-  };
 
   const handleDragStart = () => {
     const hasSelection = selected.columnId !== "" && selected.itemId !== "";
     if (hasSelection) setSelected({ columnId: "", itemId: "" });
   };
 
-  const handleDelete = () => {
-    deleteItem(selected);
-    setSelected({ columnId: "", itemId: "" });
-  };
-
-  const handleDeleteColumn = async (id: string) => {
-    await deleteColumn(id);
-    setColumnsInStore();
-  };
-
-  const handleDragEnd = (result: DropResult) => {
+  const handleDragEnd = async (result: DropResult) => {
+    if (result.type === "COLUMN") {
+      await updateColumnOrder(result);
+      setColumnsInStore();
+      return;
+    }
     if (!result.destination) return;
 
     updateStateOrder(result);
@@ -82,58 +66,7 @@ function Board() {
         <CreateColumnAction />
       </div>
       <DragDropContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-        <Row className="justify-evenly">
-          {Object.entries(columns).map(([columnId, column]) => (
-            <Col
-              key={columnId}
-              xs={12}
-              md={12}
-              lg="auto"
-              xl="auto"
-              className="md:w-56 w-56 sm:w-full rounded-lg min-w-[200px]"
-            >
-              <h3 className="rounded-lg p-2 my-2 flex justify-between ">
-                {column.name}
-                <span className="cursor-pointer">
-                  {selected.columnId === columnId ? (
-                    <Trash
-                      onClick={handleDelete}
-                      size={32}
-                      className="btn-rounded onHover !bg-gray-500 "
-                    />
-                  ) : (
-                    <Dropdown>
-                      <Dropdown.Toggle as="span" className="hide-toggle">
-                        ...
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          as="div"
-                          className=" dropdown-button"
-                          onClick={() => handleDeleteColumn(column.id)}
-                        >
-                          Delete
-                        </Dropdown.Item>
-                        <Dropdown.Item as="div" className=" dropdown-button">
-                          <RenameColumnAction
-                            id={column.id}
-                            title={column.name}
-                          />
-                        </Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  )}
-                </span>
-              </h3>
-              <DroppableItem
-                columnId={columnId}
-                column={column}
-                itemId={selected.itemId}
-                handleSelect={handleSelect}
-              />
-            </Col>
-          ))}
-        </Row>
+        <DroppableColumn selected={selected} setSelected={setSelected} />
       </DragDropContext>
     </motion.div>
   );

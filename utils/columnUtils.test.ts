@@ -1,5 +1,5 @@
 import { items, columns, dropResult, dropResultSame } from "./mockData";
-import { normalizeColumns, onDragEnd, onDeleteItem } from "./columnUitls";
+import { normalizeColumns, onDragItemEnd, onDeleteItem } from "./columnUtils";
 import { Column } from "@/interfaces/Columns";
 
 const mockColumns = normalizeColumns(items, columns as unknown as Column[]);
@@ -27,7 +27,7 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd(dropResult, normalisezCols);
+    onDragItemEnd(dropResult, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(1);
   });
@@ -36,7 +36,7 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd(dropResultSame, normalisezCols);
+    onDragItemEnd(dropResultSame, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(1);
   });
@@ -45,7 +45,7 @@ describe("onDragEnd", () => {
     const result = normalizeColumns(items, columns as unknown as Column[]);
     const setColumns = jest.fn();
 
-    onDragEnd({} as any, normalisezCols);
+    onDragItemEnd({} as any, normalisezCols);
 
     expect(setColumns).toHaveBeenCalledTimes(0);
   });

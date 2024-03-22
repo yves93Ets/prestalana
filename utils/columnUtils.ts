@@ -33,7 +33,7 @@ export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
   return normalized;
 };
 
-export const onDragEnd = (result: DropResult, columns: Columns) => {
+export const onDragItemEnd = (result: DropResult, columns: Columns) => {
   if (!result.destination) return columns;
   const { source, destination } = result;
 
@@ -62,6 +62,7 @@ export const onDragEnd = (result: DropResult, columns: Columns) => {
     };
   } else {
     sourceItems.splice(destination.index, 0, moved);
+
     return {
       ...columns,
       [source.droppableId]: {
