@@ -1,6 +1,6 @@
 "use server";
 
-import { SwapColumns } from "@/interfaces/Columns";
+import { Column, Columns } from "@/interfaces/Columns";
 import { prisma } from "@/lib/prisma";
 
 export const getColumns = async () => {
@@ -51,36 +51,36 @@ export const renameColumn = async (id: string, form: FormData) => {
   }
 };
 
-export const swapColumns = async ({
-  id,
-  order,
-  itemIds,
-  srcId,
-  srcOrder,
-  srcItemIds,
-}: SwapColumns) => {
+export const updateColumnsOrderAction = (
+  arrColumns: Column[],
+  columns: Columns
+) => {
   try {
-    const dest = prisma.column.update({
-      where: { id },
-      data: { order: order },
-    });
+    arrColumns.forEach(async (col, index) => {
+      const order = index + 1;
 
-    const src = prisma.column.update({
-      where: { id: srcId },
-      data: { order: srcOrder },
-    });
+      if (col.id === columns[order].id) return;
+      const ids = col.items.map((item) => item.id);
 
-    const srcItems = prisma.item.updateMany({
-      where: { id: { in: srcItemIds } },
-      data: { stateOrder: order.toString() },
-    });
+      const updateCols = prisma.column.update({
+        where: { id: col.id },
+        data: { order },
+      });
 
-    const items = prisma.item.updateMany({
-      where: { id: { in: itemIds } },
-      data: { stateOrder: srcOrder.toString() },
-    });
+      const updateItems =
+        ids.length === 0
+          ? null
+          : prisma.item.updateMany({
+              where: {
+                id: { in: ids },
+              },
+              data: {
+                stateOrder: order.toString(),
+              },
+            });
 
-    await Promise.all([dest, src, srcItems, items]);
+      await Promise.all([updateCols, updateItems]);
+    });
   } catch (error) {
     console.error(error);
   }

@@ -11,6 +11,7 @@ import useColumns from "@/app/components/hooks/useColumns";
 import { CreateColumnAction } from "@/app/components/column";
 
 import { DroppableColumn } from "./dnd";
+import { moveColumns } from "@/utils/columnUtils";
 
 const Animated = lazy(() =>
   import("@/app/components/common/animations/SearchingAnimated").then(
@@ -33,12 +34,8 @@ function Board() {
   };
 
   const handleDragEnd = async (result: DropResult) => {
-    if (result.type === "COLUMN") {
-      await updateColumnOrder(result);
-      setColumnsInStore();
-      return;
-    }
     if (!result.destination) return;
+    if (result.type === "COLUMN") return await updateColumnOrder(result);
 
     updateStateOrder(result);
   };

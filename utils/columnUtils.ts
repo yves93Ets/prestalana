@@ -33,9 +33,11 @@ export const normalizeColumns = (items: Item[], columns: Column[]): Columns => {
   return normalized;
 };
 
-export const onDragItemEnd = (result: DropResult, columns: Columns) => {
-  if (!result.destination) return columns;
-  const { source, destination } = result;
+export const onDragItemEnd = (
+  { source, destination }: DropResult,
+  columns: Columns
+) => {
+  if (!destination) return columns;
 
   const sourceColumn = columns[source.droppableId];
   const destColumn = columns[destination.droppableId];
@@ -77,4 +79,45 @@ export const onDeleteItem = (selected: ItemDelete, columns: Columns) => {
   const column = columns[selected.columnId];
 
   return column.items.filter((item) => item.id !== selected.itemId);
+};
+
+export const moveColumns = (
+  srcIndex: number,
+  destIndex: number,
+  columns: Columns
+) => {
+  const arr = slideColumns(srcIndex, destIndex, columns);
+
+  return updateColumnsOrder(arr);
+};
+
+export const updateColumnsOrder = (columns: Column[]) =>
+  columns.map((col, index) => ({
+    ...col,
+    order: index + 1,
+    items: col.items.map((item) => ({
+      ...item,
+      stateOrder: (index + 1).toString(),
+    })),
+  }));
+
+export const convertArrayToObject = (colsWihtNewOrder: Column[]) => {
+  return colsWihtNewOrder.reduce((obj: { [key: number]: any }, col, index) => {
+    obj[index + 1] = col;
+    return obj;
+  }, {});
+};
+
+export const slideColumns = (
+  srcIndex: number,
+  destIndex: number,
+  columns: Columns
+) => {
+  const arr = Object.values(columns);
+
+  const col = arr[srcIndex];
+  arr.splice(srcIndex, 1);
+  arr.splice(destIndex, 0, col);
+
+  return arr;
 };

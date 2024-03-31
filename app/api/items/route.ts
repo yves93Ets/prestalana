@@ -49,4 +49,12 @@ export async function DELETE(req: Request) {
   }
 }
 
-const getItems = cache(() => prisma.item.findMany());
+const getItems = cache(() =>
+  prisma.item.findMany({
+    select: {
+      id: true,
+      task: true,
+      stateOrder: true,
+    },
+  })
+);

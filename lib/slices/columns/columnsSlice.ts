@@ -7,7 +7,7 @@ import { createItem } from "./thunks/create-item";
 import { deleteItem } from "./thunks/delete-item";
 import { updateItem } from "./thunks/update-item";
 import { updateColumn } from "./thunks/update-column";
-import { onDeleteItem, onDragItemEnd } from "@/utils/columnUtils";
+import { onDeleteItem } from "@/utils/columnUtils";
 
 const initialState = {
   columns: {} as Columns,
@@ -44,13 +44,13 @@ const slice = createSlice({
       .addCase(deleteItem.rejected, (state, action) => {})
 
       .addCase(updateItem.fulfilled, (state, action) => {
-        const columns = onDragItemEnd(action.payload, state.columns);
-
-        state.columns = columns;
+        state.columns = action.payload as Columns;
       })
       .addCase(updateItem.rejected, (state, action) => {})
 
-      .addCase(updateColumn.fulfilled, (state, action) => {});
+      .addCase(updateColumn.fulfilled, (state, action) => {
+        state.columns = action.payload;
+      });
   },
 });
 

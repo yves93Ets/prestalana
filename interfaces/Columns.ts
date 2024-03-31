@@ -13,12 +13,3 @@ export interface Column extends DBColumn {
 export interface Columns {
   [key: string]: Column;
 }
-
-export interface SwapColumns {
-  id: string;
-  order: number;
-  itemIds: string[];
-  srcId: string;
-  srcOrder: number;
-  srcItemIds: string[];
-}

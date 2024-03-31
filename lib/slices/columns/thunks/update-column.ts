@@ -1,11 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DropResult } from "@hello-pangea/dnd";
-import { SwapColumns } from "@/interfaces/Columns";
-import { swapColumns } from "@/app/column/column-actions";
-import { Item } from "@/interfaces/Items";
+import { updateColumnsOrderAction } from "@/app/column/column-actions";
+import { convertArrayToObject, moveColumns } from "@/utils/columnUtils";
 
 /**
- * Create a new item the item can have a task and a stateOrder
+ * Update the column order and the item state order
  * @param {DropResult} result - The drag n drop result which includes id and state order
  */
 
@@ -14,25 +13,21 @@ const thunk = async (
   { getState }: { getState: any }
 ) => {
   try {
-    if (!destination?.droppableId) return;
-    const srcIndex = source.index + 1;
-    const index = destination?.index + 1;
+    if (!destination?.droppableId) throw Error("No destination");
+
     const columns = getState().columnsState.columns;
+    const colsWihtNewOrder = moveColumns(
+      source.index,
+      destination.index,
+      columns
+    );
 
-    if (srcIndex === index) return;
+    // not awaiting as we don't need to wait for the response
+    updateColumnsOrderAction(colsWihtNewOrder, columns);
 
-    const swap: SwapColumns = {
-      order: index,
-      id: columns[srcIndex].id,
-      itemIds: columns[index].items.map((item: Item) => item.id),
-      srcOrder: srcIndex,
-      srcId: columns[index].id,
-      srcItemIds: columns[srcIndex].items.map((item: Item) => item.id),
-    };
-
-    swapColumns(swap);
+    return convertArrayToObject(colsWihtNewOrder);
   } catch (error: any) {
-    console.log(1111, "error", error);
+    console.log("error", error);
     throw Error("Error fetching data", error);
   }
 };
